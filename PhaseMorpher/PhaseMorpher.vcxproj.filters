@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="exe">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="src\modules">
+      <UniqueIdentifier>{bbceba5a-dc11-4700-afc7-c42505ec9efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools">
+      <UniqueIdentifier>{fe5c4d41-9a47-44af-b62a-05eb097561bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\base">
+      <UniqueIdentifier>{ec335643-75b9-40cd-95b8-fd28c14f0fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\input">
+      <UniqueIdentifier>{f41af6d1-6d41-4e23-adb5-6ae26f15daaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model">
+      <UniqueIdentifier>{a736aa2b-207a-43af-b033-5df31ff8036f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\preprocess">
+      <UniqueIdentifier>{933a2360-1c60-4091-a96e-80d7884c7a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\postprocess">
+      <UniqueIdentifier>{68c5a0fd-c742-47ab-accb-fbbfa669692f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\input\infile">
+      <UniqueIdentifier>{a22bf7d6-cb93-488c-bdb3-cf50a4ab08bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\input\license">
+      <UniqueIdentifier>{c1e9b863-0953-4c73-b0b0-e225caa8e601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\phasefield">
+      <UniqueIdentifier>{c3c52e06-b32b-40b4-b7a2-5b6cfc4631cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\confield">
+      <UniqueIdentifier>{eb5eeb46-9b69-4757-8fee-c223e3165154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\tempfield">
+      <UniqueIdentifier>{8927f17d-c052-4a4d-b101-3f70848425b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\data_struct">
+      <UniqueIdentifier>{6f13ca2c-76eb-489e-b6a8-9d14c4588188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\preprocess\microstructure_init">
+      <UniqueIdentifier>{c674c138-a865-4058-8272-43d2558181b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\electricfield">
+      <UniqueIdentifier>{9f8f3c05-8793-497e-bff6-add15e919107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\fluidfield">
+      <UniqueIdentifier>{5d77d902-70e7-4d5d-910c-aec692e13f01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\magneticfield">
+      <UniqueIdentifier>{fe5df7a2-43e3-4fa5-b6b1-297252983e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\mechanicalfield">
+      <UniqueIdentifier>{d27b2ecb-9535-4ba5-98f4-80993e7971e5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PhaseMorpher.cpp">
+      <Filter>exe</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\input_modules\license\license.cpp">
+      <Filter>src\modules\input\license</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\model_modules\PhaseField\PairwiseEquation.cpp">
+      <Filter>src\modules\model\phasefield</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\Bmp24Structure.cpp">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\GeometryStructure.cpp">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\PorousStructure.cpp">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\VoronoiStructure.cpp">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\whereami.c">
+      <Filter>src\tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\launcher.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\data_container.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\sysfiles.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\data_struct\Mesh_0.h">
+      <Filter>src\modules\data_struct</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\data_struct\Point_0.h">
+      <Filter>src\modules\data_struct</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\data_struct\RotationMatrix.h">
+      <Filter>src\modules\data_struct</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\data_struct\VectorMatrix.h">
+      <Filter>src\modules\data_struct</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\Docs.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\infile_selector.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\InputFileMath.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\InputFileReader.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\pm_info.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\QuickStartUp.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\selectFile.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\SimuInfo.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\inputfiles\UserStartUp.h">
+      <Filter>src\modules\input\infile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\license\computer_info.h">
+      <Filter>src\modules\input\license</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\license\license.h">
+      <Filter>src\modules\input\license</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\license\ProgramPath.h">
+      <Filter>src\modules\input\license</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\ioFiles_Params.h">
+      <Filter>src\modules\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\input_modules\InputModulesManager.h">
+      <Filter>src\modules\input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldManager.h">
+      <Filter>src\modules\model\confield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationField_Params.h">
+      <Filter>src\modules\model\confield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureFieldManager.h">
+      <Filter>src\modules\model\tempfield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureField_Params.h">
+      <Filter>src\modules\model\tempfield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\PhaseField\PairwiseEquation.h">
+      <Filter>src\modules\model\phasefield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldManager.h">
+      <Filter>src\modules\model\phasefield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\PhaseField\PhaseField_Params.h">
+      <Filter>src\modules\model\phasefield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\ModelModulesManager.h">
+      <Filter>src\modules\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\Model_Params.h">
+      <Filter>src\modules\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\postprocess_modules\AutoDeltTime.h">
+      <Filter>src\modules\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\postprocess_modules\CpuMemoryUsage.h">
+      <Filter>src\modules\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\postprocess_modules\DataStatistics.h">
+      <Filter>src\modules\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\postprocess_modules\PostprocessModulesManager.h">
+      <Filter>src\modules\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\postprocess_modules\ShowLoopInfo.h">
+      <Filter>src\modules\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\postprocess_modules\WriteMeshData.h">
+      <Filter>src\modules\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\postprocess_modules\WriteVTS.h">
+      <Filter>src\modules\postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\preprocess_modules\MicrostructureInit\Bmp24Structure.h">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\preprocess_modules\MicrostructureInit\GeometryStructure.h">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\preprocess_modules\MicrostructureInit\PorousStructure.h">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\preprocess_modules\MicrostructureInit\VoronoiStructure.h">
+      <Filter>src\modules\preprocess\microstructure_init</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\preprocess_modules\PreprocessModulesManager.h">
+      <Filter>src\modules\preprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\preprocess_modules\MicrostructureInit.h">
+      <Filter>src\modules\preprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\preprocess_modules\MicrostructureInit_Params.h">
+      <Filter>src\modules\preprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\Module.h">
+      <Filter>src\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\MainIterator.h">
+      <Filter>src\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\MainIterator_Params.h">
+      <Filter>src\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\BMP24Reader.h">
+      <Filter>src\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\ioModify.h">
+      <Filter>src\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\mathTools.h">
+      <Filter>src\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\StringModify.h">
+      <Filter>src\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\timer.h">
+      <Filter>src\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\whereami.h">
+      <Filter>src\tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

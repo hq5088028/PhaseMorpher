@@ -1,0 +1,5 @@
+x64
+!PhaseMorpher/lib/x64
+.vs
+PhaseMorpher/infile/1_Microstructure/*/
+PhaseMorpher/infile/2_Models/0_PhiConTemp/0_PairWise_interface/*/

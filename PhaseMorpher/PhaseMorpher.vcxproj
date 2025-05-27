@@ -30,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\base\data_container.h" />
+    <ClInclude Include="src\base\MACRO_DEF.h" />
     <ClInclude Include="src\base\sysfiles.h" />
     <ClInclude Include="src\launcher.h" />
     <ClInclude Include="src\modules\data_struct\Mesh_0.h" />

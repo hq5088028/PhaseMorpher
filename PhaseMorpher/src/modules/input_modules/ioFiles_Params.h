@@ -1,7 +1,6 @@
 #pragma once
 #include "../../tools/ioModify.h"
 #include "license/ProgramPath.h"
-#include <filesystem>
 namespace pf {
 	namespace input_output_files_parameters {
 		inline std::string Program_Path = program_path.string();

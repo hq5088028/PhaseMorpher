@@ -250,5 +250,8 @@
     <ClInclude Include="src\tools\whereami.h">
       <Filter>src\tools</Filter>
     </ClInclude>
+    <ClInclude Include="src\base\MACRO_DEF.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

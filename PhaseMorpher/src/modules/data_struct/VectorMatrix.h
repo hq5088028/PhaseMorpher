@@ -1,6 +1,7 @@
-
 #pragma once
-#include "../../base/sysfiles.h"
+#include "../../base/MACRO_DEF.h"
+#include <sstream>
+#include <iomanip>
 namespace pf {
     class Vector3;
     class Matrix3x3;

@@ -1,5 +1,5 @@
 #pragma once
-#include "../base/sysfiles.h"
+#include "../base/MACRO_DEF.h"
 namespace pf {
 	inline void str_char_delete(std::string& str, char _word) {
 		std::size_t start_position{ str.find(_word) };

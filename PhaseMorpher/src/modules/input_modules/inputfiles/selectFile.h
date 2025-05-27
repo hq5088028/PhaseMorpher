@@ -1,9 +1,7 @@
 #pragma once
-
 #include <iostream>
 #include <string>
 #include "SimuInfo.h"
-
 #ifdef _WIN32
 #include <windows.h>
 namespace pf {

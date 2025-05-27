@@ -1,7 +1,5 @@
 #pragma once
 #include<iostream>
-#include<fstream>
-
 namespace pf {
 	inline void print_info() {
 		std::cout << "" << std::endl;

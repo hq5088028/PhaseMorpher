@@ -1,5 +1,4 @@
 #pragma once
-#include "../../base/sysfiles.h"
 #include "VectorMatrix.h"
 namespace pf {
 	struct PhaseFieldPoint

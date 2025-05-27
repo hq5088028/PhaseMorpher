@@ -1,5 +1,7 @@
 #pragma once
-#include "../../base/sysfiles.h"
+#include "../../base/MACRO_DEF.h"
+#include <vector>
+#include <iostream>
 namespace pf {
 	enum BoundaryCondition { FIXED, PERIODIC, ADIABATIC };
 

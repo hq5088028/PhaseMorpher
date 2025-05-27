@@ -1,5 +1,5 @@
 #pragma once
-#include "../base/sysfiles.h"
+#include "../base/MACRO_DEF.h"
 
 namespace pf {
 	inline bool isTwoNumEquality(REAL a, REAL b) {

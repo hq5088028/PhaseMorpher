@@ -63,6 +63,12 @@
     <Filter Include="src\modules\model\mechanicalfield">
       <UniqueIdentifier>{d27b2ecb-9535-4ba5-98f4-80993e7971e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\modules\model\phasefield\phi_models">
+      <UniqueIdentifier>{ab66775f-96c5-48b9-baf9-f8d468a2f10e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\modules\model\confield\con_models">
+      <UniqueIdentifier>{e2b39da5-3d6a-49d3-8d9e-84b8c1b7c5fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PhaseMorpher.cpp">
@@ -70,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="src\modules\input_modules\license\license.cpp">
       <Filter>src\modules\input\license</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\model_modules\PhaseField\PairwiseEquation.cpp">
-      <Filter>src\modules\model\phasefield</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\Bmp24Structure.cpp">
       <Filter>src\modules\preprocess\microstructure_init</Filter>
@@ -89,6 +92,12 @@
     <ClCompile Include="src\tools\whereami.c">
       <Filter>src\tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\model_modules\PhaseField\PhaseFieldModels\PairwiseEquation.cpp">
+      <Filter>src\modules\model\phasefield\phi_models</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldModels\GrandPotentialEquation.cpp">
+      <Filter>src\modules\model\confield\con_models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\launcher.h">
@@ -101,9 +110,6 @@
       <Filter>src\base</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\data_struct\Mesh_0.h">
-      <Filter>src\modules\data_struct</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\data_struct\Point_0.h">
       <Filter>src\modules\data_struct</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\data_struct\RotationMatrix.h">
@@ -165,9 +171,6 @@
     </ClInclude>
     <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureField_Params.h">
       <Filter>src\modules\model\tempfield</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\model_modules\PhaseField\PairwiseEquation.h">
-      <Filter>src\modules\model\phasefield</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldManager.h">
       <Filter>src\modules\model\phasefield</Filter>
@@ -252,6 +255,12 @@
     </ClInclude>
     <ClInclude Include="src\base\MACRO_DEF.h">
       <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldModels\PairwiseEquation.h">
+      <Filter>src\modules\model\phasefield\phi_models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldModels\GrandPotentialEquation.h">
+      <Filter>src\modules\model\confield\con_models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

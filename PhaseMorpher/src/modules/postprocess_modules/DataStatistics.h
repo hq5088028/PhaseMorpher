@@ -9,13 +9,13 @@ namespace pf {
 
 		inline PhaseFieldPoint statistical_phi() {
 			PhaseFieldPoint phi_info;
-			phi_info.init(model_parameters::phi_number);
+			phi_info.init(phi_parameters::phi_number);
 			int SIZE = mesh_parameters::MESH_NX * mesh_parameters::MESH_NY * mesh_parameters::MESH_NZ;
-			for (int x = simulation_mesh::phase_field.X_BEGIN(); x <= simulation_mesh::phase_field.X_END(); x++)
-				for (int y = simulation_mesh::phase_field.Y_BEGIN(); y <= simulation_mesh::phase_field.Y_END(); y++)
-					for (int z = simulation_mesh::phase_field.Z_BEGIN(); z <= simulation_mesh::phase_field.Z_END(); z++) {
-						PhaseFieldPoint& point = simulation_mesh::phase_field(x, y, z);
-						for (int index = 0; index < model_parameters::phi_number; index++)
+			for (int x = phi_parameters::phase_field.X_BEGIN(); x <= phi_parameters::phase_field.X_END(); x++)
+				for (int y = phi_parameters::phase_field.Y_BEGIN(); y <= phi_parameters::phase_field.Y_END(); y++)
+					for (int z = phi_parameters::phase_field.Z_BEGIN(); z <= phi_parameters::phase_field.Z_END(); z++) {
+						PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
+						for (int index = 0; index < phi_parameters::phi_number; index++)
 							phi_info.phi[index] += point.phi[index] / SIZE;
 					}
 			return phi_info;

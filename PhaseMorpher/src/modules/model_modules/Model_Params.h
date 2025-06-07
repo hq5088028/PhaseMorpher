@@ -1,6 +1,5 @@
 #pragma once
 #include "../data_struct/Mesh_0.h"
-#include "../data_struct/Point_0.h"
 #include "../data_struct/RotationMatrix.h"
 #include "../MainIterator_Params.h"
 #include "../../tools/mathTools.h"
@@ -50,15 +49,6 @@ namespace pf {
 			WriteError(error);
 			SYS_PROGRAM_STOP;
 		}
-
-	}
-	namespace simulation_mesh {
-		// - phase field data
-		inline Mesh_Boundry<PhaseFieldPoint> phase_field;
-		// - concentration field data
-		inline Mesh_Boundry<ConcentrationFieldPoint> concentration_field;
-		// - temperature field data
-		inline Mesh_Boundry<TemperatureFieldPoint> temperature_field;
 
 	}
 }

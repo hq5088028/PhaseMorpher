@@ -18,9 +18,9 @@ namespace pf {
 		inline REAL con_increment_limit = REAL(1e-3);
 		inline REAL temp_increment_limit = REAL(1e-3);
 		void exec_post_iii() {
-			REAL MAX_dphi_versus_limitPhi = model_parameters::PHI_MAX_VARIATION / phi_increment_limit;
-			REAL MAX_dcon_versus_limitCon = model_parameters::CON_MAX_VARIATION / con_increment_limit;
-			REAL MAX_dT_versus_limitT = model_parameters::TEMP_MAX_VARIATION / temp_increment_limit;
+			REAL MAX_dphi_versus_limitPhi = phi_parameters::PHI_MAX_VARIATION / phi_increment_limit;
+			REAL MAX_dcon_versus_limitCon = con_parameters::CON_MAX_VARIATION / con_increment_limit;
+			REAL MAX_dT_versus_limitT = temp_parameters::TEMP_MAX_VARIATION / temp_increment_limit;
 			REAL delt_scale = REAL(0.05);
 
 			if (MAX_dcon_versus_limitCon > 1) {

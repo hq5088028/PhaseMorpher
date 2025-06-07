@@ -6,9 +6,9 @@ namespace pf {
 		int control_equation = 0;
 		WriteDebugFile("# Solver.ControlEquation.ConcentrationField = 0 - Const , 1 - TotalConcentration, 2 - GrandPotential, ... \n");
 		if (InputFileReader::get_instance()->read_int_value("Solver.ControlEquation.ConcentrationField", control_equation, true)) {
-			model_parameters::is_con_field_on = true;
-			model_parameters::con_equation = ConcentrationFieldEquation(control_equation);
-			switch (model_parameters::con_equation)
+			con_parameters::is_con_field_on = true;
+			con_parameters::con_equation = ConcentrationFieldEquation(control_equation);
+			switch (con_parameters::con_equation)
 			{
 			case ConcentrationFieldEquation::CFE_TotalConcentration: {
 				break;

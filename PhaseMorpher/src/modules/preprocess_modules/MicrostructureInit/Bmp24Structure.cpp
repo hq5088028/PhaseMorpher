@@ -3,7 +3,6 @@ namespace pf {
 	namespace bmp24_structure {
 		void generate_structure_from_BMP_pic() {
 #ifdef _WIN32
-			using namespace simulation_mesh;
 			if (mesh_parameters::MESH_NZ > 1) {
 				string error_report = "> Warnning : generate structure error : Nz > 1, cant init structure by a BMP picture !\n";
 				WriteDebugFile(error_report);
@@ -23,13 +22,13 @@ namespace pf {
 							set.add_point(x + 1, y + 1, 1, microstructure_init::bmp24_phi_value[layer_index]);
 					}
 				set.generate_step = 0;
-				if (model_parameters::is_phi_field_on) {
+				if (phi_parameters::is_phi_field_on) {
 					set.phaseIndex = microstructure_init::bmp24_phi_index[layer_index];
 					set.is_normalized = microstructure_init::bmp24_phi_normalized[layer_index];
 				}
-				if (model_parameters::is_con_field_on)
+				if (con_parameters::is_con_field_on)
 					set.con = microstructure_init::bmp24_con[layer_index];
-				if (model_parameters::is_temp_field_on)
+				if (temp_parameters::is_temp_field_on)
 					set.temperature = microstructure_init::bmp24_temperature[layer_index];
 				microstructure_init::nucleation_box.point_set_box.push_back(set);
 			}
@@ -55,7 +54,7 @@ namespace pf {
 					vector<input_value> bmp24_threshold_value = InputFileReader::get_instance()->trans_matrix_1d_const_to_input_value(InputValueType::IVType_REAL, bmp24_threshold_key, bmp24_threshold_input, true);
 					microstructure_init::bmp24_threshold.push_back({ bmp24_threshold_value[0].REAL_value, bmp24_threshold_value[1].REAL_value });
 					// - phi
-					if (model_parameters::is_phi_field_on) {
+					if (phi_parameters::is_phi_field_on) {
 						WriteDebugFile("# .phi = ( phi_index, phi_value, is_normalized ) \n");
 						string bmp24_phi_key = "Preprocess.Microstructure.bmp24_layer_" + to_string(bmp_layer) + ".phi", bmp24_phi_input = "(0,0,false)";
 						InputFileReader::get_instance()->read_string_value(bmp24_phi_key, bmp24_phi_input, true);
@@ -68,7 +67,7 @@ namespace pf {
 						microstructure_init::bmp24_phi_normalized.push_back(bmp24_phi_value[2].bool_value);
 					}
 					// - con
-					if (model_parameters::is_con_field_on) {
+					if (con_parameters::is_con_field_on) {
 						vector<REAL> con;
 						WriteDebugFile("# .con = ( comp_0_value, comp_1_value, ... ) \n");
 						string bmp24_x_key = "Preprocess.Microstructure.bmp24_layer_" + to_string(bmp_layer) + ".con", bmp24_x_input = "()";
@@ -81,7 +80,7 @@ namespace pf {
 						}
 					}
 					// - temperature
-					if (model_parameters::is_temp_field_on) {
+					if (temp_parameters::is_temp_field_on) {
 						string bmp24_temp_key = "Preprocess.Microstructure.bmp24_layer_" + to_string(bmp_layer) + ".temperature"; REAL bmp_temp = 0.0;
 						InputFileReader::get_instance()->read_REAL_value(bmp24_temp_key, bmp_temp, true);
 						microstructure_init::bmp24_temperature.push_back(bmp_temp);

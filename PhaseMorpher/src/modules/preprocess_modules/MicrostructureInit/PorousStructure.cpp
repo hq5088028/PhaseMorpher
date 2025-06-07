@@ -16,7 +16,7 @@ namespace pf {
 				check_phi_index(porous_second_phi_index);
 				porosity = porous_value[2].REAL_value;
 				porous_init_noise = porous_value[3].REAL_value;
-				if (model_parameters::is_con_field_on) {
+				if (con_parameters::is_con_field_on) {
 					WriteDebugFile("# .con = [(first_comp_0_value, first_comp_0_value, ... ), (second_comp_0_value, second_comp_0_value, ... )] \n");
 					string porous_x_key = "Preprocess.Microstructure.Porous.con", porous_x_input = "[()]";
 					if (InputFileReader::get_instance()->read_string_value(porous_x_key, porous_x_input, true)) {
@@ -29,7 +29,7 @@ namespace pf {
 						check_con_size(int(porous_second_con.size()));
 					}
 				}
-				if (model_parameters::is_temp_field_on) {
+				if (temp_parameters::is_temp_field_on) {
 					WriteDebugFile("# .temperature = (first_temperature, second_temperature) \n");
 					string porous_temp_key = "Preprocess.Microstructure.Porous.temperature", porous_temp_input = "(0,0)";
 					InputFileReader::get_instance()->read_string_value(porous_temp_key, porous_temp_input, true);
@@ -706,9 +706,9 @@ namespace pf {
 				PointSet set_phi_1, set_phi_2;
 				for (int i = 0; i < mesh_parameters::MESH_NX; i++) {
 					for (int j = 0; j < mesh_parameters::MESH_NY; j++) {
-						PhaseFieldPoint& point = simulation_mesh::phase_field(i + 1, j + 1, 0 + 1);
+						PhaseFieldPoint& point = phi_parameters::phase_field(i + 1, j + 1, 0 + 1);
 						REAL sum_phi = 0.0;
-						for (int index = 0; index < model_parameters::phi_number; index++)
+						for (int index = 0; index < phi_parameters::phi_number; index++)
 							for (int index2 = 0; index2 < microstructure_init::porous_phis_indexs.size(); index2++)
 								if (index == microstructure_init::porous_phis_indexs[index2] && point.phi[index] > SYS_EPSILON) {
 									sum_phi += point.phi[index];
@@ -774,9 +774,9 @@ namespace pf {
 				for (int i = 0; i < mesh_parameters::MESH_NX; i++) {
 					for (int j = 0; j < mesh_parameters::MESH_NY; j++) {
 						for (int k = 0; k < mesh_parameters::MESH_NZ; k++) {
-							PhaseFieldPoint& point = simulation_mesh::phase_field(i + 1, j + 1, k + 1);
+							PhaseFieldPoint& point = phi_parameters::phase_field(i + 1, j + 1, k + 1);
 							REAL sum_phi = 0.0;
-							for (int index = 0; index < model_parameters::phi_number; index++)
+							for (int index = 0; index < phi_parameters::phi_number; index++)
 								for (int index2 = 0; index2 < microstructure_init::porous_phis_indexs.size(); index2++)
 									if (index == microstructure_init::porous_phis_indexs[index2] && point.phi[index] > SYS_EPSILON) {
 										sum_phi += point.phi[index];

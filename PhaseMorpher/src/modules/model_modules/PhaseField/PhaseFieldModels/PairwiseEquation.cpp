@@ -2,10 +2,8 @@
 
 namespace pf {
 	namespace pair_wise_functions {
-		using namespace pf::simulation_mesh;
-		using namespace pf::mesh_parameters;
-		using namespace pf::model_parameters::pair_wise_equation;
-		using namespace pf::model_parameters;
+		using namespace pf::phi_parameters;
+		using namespace pf::phi_parameters::pair_wise_equation;
 		using namespace pf::time_parameters;
 		// - 
 		Flag currentFlag(int x, int y, int z, PhaseFieldPoint& point, PairwisePoint& point_ex, int phi_index) {
@@ -592,9 +590,9 @@ namespace pf {
 		};
 		REAL dfint_dphi_crack_D2016_acc(int x, int y, int z, PhaseFieldPoint& point, int phi_index) {
 			REAL gc = phase_field_Gc(x, y, z);
-			Vector3 delt_gc = { (phase_field_Gc(x + 1, y, z) - phase_field_Gc(x - 1, y, z)) / 2 / delt_r,
-			(phase_field_Gc(x, y + 1, z) - phase_field_Gc(x, y - 1, z)) / 2 / delt_r,
-			(phase_field_Gc(x, y, z + 1) - phase_field_Gc(x, y, z - 1)) / 2 / delt_r };
+			Vector3 delt_gc = { (phase_field_Gc(x + 1, y, z) - phase_field_Gc(x - 1, y, z)) / 2 / mesh_parameters::delt_r,
+			(phase_field_Gc(x, y + 1, z) - phase_field_Gc(x, y - 1, z)) / 2 / mesh_parameters::delt_r,
+			(phase_field_Gc(x, y, z + 1) - phase_field_Gc(x, y, z - 1)) / 2 / mesh_parameters::delt_r };
 			return gc / crack_int_width * crack_K - 2 * crack_int_width * (point.grad_phi[phi_index] * delt_gc + gc * point.lap_phi[phi_index]);
 		};
 		void pairwise_normalize_daniel_crack_acc(PhaseFieldPoint& point, PairwisePoint& point_ex) {
@@ -663,7 +661,7 @@ namespace pf {
 			return source_sum;
 		}
 
-		void pairwise_normalize_normal(pf::PhaseFieldPoint& point, pf::model_parameters::pair_wise_equation::PairwisePoint& point_ex) {
+		void pairwise_normalize_normal(pf::PhaseFieldPoint& point, PairwisePoint& point_ex) {
 			REAL scale = 1.0, increment = 0.0;
 			for (int index = 0; index < phi_number; index++) {
 				if (point_ex.flag[index]) {
@@ -688,7 +686,7 @@ namespace pf {
 			}
 		}
 
-		inline void pairwise_normalize_acc(pf::PhaseFieldPoint& point, pf::model_parameters::pair_wise_equation::PairwisePoint& point_ex) {
+		inline void pairwise_normalize_acc(pf::PhaseFieldPoint& point, PairwisePoint& point_ex) {
 			REAL scale = 1.0, increment = 0.0;
 			for (int index = 0; index < phi_acc_number; index++) {
 				int acc_index = point_ex.active_index[index];
@@ -737,15 +735,15 @@ namespace pf {
 							if (point_ex.flag[index]) {
 								point_ex.bulk_increment[index] = 0.0;
 								point_ex.int_increment[index] = 0.0;
-								point.grad_phi[index][0] = (phase_field(x + 1, y, z).phi[index] - phase_field(x - 1, y, z).phi[index]) / 2 / delt_r;
-								point.grad_phi[index][1] = (phase_field(x, y + 1, z).phi[index] - phase_field(x, y - 1, z).phi[index]) / 2 / delt_r;
-								point.grad_phi[index][2] = (phase_field(x, y, z + 1).phi[index] - phase_field(x, y, z - 1).phi[index]) / 2 / delt_r;
+								point.grad_phi[index][0] = (phase_field(x + 1, y, z).phi[index] - phase_field(x - 1, y, z).phi[index]) / 2 / mesh_parameters::delt_r;
+								point.grad_phi[index][1] = (phase_field(x, y + 1, z).phi[index] - phase_field(x, y - 1, z).phi[index]) / 2 / mesh_parameters::delt_r;
+								point.grad_phi[index][2] = (phase_field(x, y, z + 1).phi[index] - phase_field(x, y, z - 1).phi[index]) / 2 / mesh_parameters::delt_r;
 								if (diff_method == DifferenceMethod::FIVE_POINT) {
 									point.lap_phi[index] =
 										(phase_field(x + 1, y, z).phi[index] + phase_field(x - 1, y, z).phi[index]
 											+ phase_field(x, y + 1, z).phi[index] + phase_field(x, y - 1, z).phi[index]
 											+ phase_field(x, y, z + 1).phi[index] + phase_field(x, y, z - 1).phi[index]
-											- 6 * point.phi[index]) / delt_r / delt_r;
+											- 6 * point.phi[index]) / mesh_parameters::delt_r / mesh_parameters::delt_r;
 								}
 								else if (diff_method == DifferenceMethod::NINE_POINT) {
 									point.lap_phi[index] =
@@ -758,7 +756,7 @@ namespace pf {
 											+ phase_field(x + 1, y, z - 1).phi[index] + phase_field(x + 1, y, z + 1).phi[index]
 											+ phase_field(x, y - 1, z - 1).phi[index] + phase_field(x, y - 1, z + 1).phi[index]
 											+ phase_field(x, y + 1, z - 1).phi[index] + phase_field(x, y + 1, z + 1).phi[index]
-											- 36 * point.phi[index]) / 6 / delt_r / delt_r;
+											- 36 * point.phi[index]) / 6 / mesh_parameters::delt_r / mesh_parameters::delt_r;
 								}
 							}
 							else {
@@ -866,8 +864,8 @@ namespace pf {
 		}
 
 		REAL solve_phi_pair_wise() {
-			using namespace simulation_mesh;
-			using namespace pair_wise_equation;
+			using namespace phi_parameters;
+			using namespace phi_parameters::pair_wise_equation;
 			REAL MAX_PHI_INCREMENT = 0.0;
 #pragma omp parallel for
 			for (int x = phase_field.X_BEGIN(); x <= phase_field.X_END(); x++)

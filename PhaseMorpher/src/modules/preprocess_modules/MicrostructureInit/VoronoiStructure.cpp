@@ -78,7 +78,7 @@ namespace pf {
 				vector<input_value> voronoi_x_value = InputFileReader::get_instance()->trans_matrix_1d_const_to_input_value(InputValueType::IVType_REAL, voronoi_x_key, voronoi_x_input, true);
 				for (int x_index = 0; x_index < voronoi_x_value.size(); x_index++)
 					voronoi_con.push_back(voronoi_x_value[x_index].REAL_value);
-				check_con_size(voronoi_con.size());
+				check_con_size(int(voronoi_con.size()));
 
 				string voronoi_temperature_key = "Preprocess.Microstructure.Voronoi.temperature";
 				InputFileReader::get_instance()->read_REAL_value(voronoi_temperature_key, voronoi_temperature, true);
@@ -451,9 +451,9 @@ namespace pf {
 				Point p(rand_x * microstructure_init::voronoi_box_size[0] + microstructure_init::voronoi_box_position[0],
 					rand_y * microstructure_init::voronoi_box_size[1] + microstructure_init::voronoi_box_position[1],
 					rand_z * microstructure_init::voronoi_box_size[2] + microstructure_init::voronoi_box_position[2]);
-				PhaseFieldPoint& point = simulation_mesh::phase_field(int(p.x), int(p.y), int(p.z));
+				PhaseFieldPoint& point = phi_parameters::phase_field(int(p.x), int(p.y), int(p.z));
 				REAL sum_phi = 0;
-				for (int index = 0; index < model_parameters::phi_number; index++)
+				for (int index = 0; index < phi_parameters::phi_number; index++)
 					for (int index2 = 0; index2 < microstructure_init::voronoi_phis_indexs.size(); index2++)
 						if (index == microstructure_init::voronoi_phis_indexs[index2])
 							sum_phi += point.phi[index];
@@ -557,13 +557,13 @@ namespace pf {
 						}
 					PointSet set;
 					REAL sum_sum_phi = 0;
-					for (int z = 0; z < simulation_mesh::phase_field.Nz(); z++)
-						for (int y = 0; y < simulation_mesh::phase_field.Ny(); y++)
-							for (int x = 0; x < simulation_mesh::phase_field.Nx(); x++) {
-								PhaseFieldPoint& point = simulation_mesh::phase_field(x, y, z);
+					for (int z = 0; z < phi_parameters::phase_field.Nz(); z++)
+						for (int y = 0; y < phi_parameters::phase_field.Ny(); y++)
+							for (int x = 0; x < phi_parameters::phase_field.Nx(); x++) {
+								PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
 								if (poly.check_point_inside_polyhedron(pf::Point(x, y, z)) == true) {
 									REAL sum_phi = 0;
-									for (int index = 0; index < model_parameters::phi_number; index++)
+									for (int index = 0; index < phi_parameters::phi_number; index++)
 										for (int index2 = 0; index2 < microstructure_init::voronoi_phis_indexs.size(); index2++)
 											if (index == microstructure_init::voronoi_phis_indexs[index2] && point.phi[index] > SYS_EPSILON) {
 												sum_phi += point.phi[index];

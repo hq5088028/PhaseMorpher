@@ -7,19 +7,8 @@ Modified:    Qi Huang 2025.3.21;
 Email:       
 
 */
-
 #pragma once
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <algorithm>
 #include <filesystem>
-#if !defined(_WIN32)
-#include <readline/readline.h>
-#include <readline/history.h>
-#endif //_WIN32
-#include "../../../tools/StringModify.h"
 #include "../license/ProgramPath.h"
 namespace pf {
 	inline bool Quick_StartUp(std::string& infile_path) {

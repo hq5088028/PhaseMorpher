@@ -1,6 +1,6 @@
 #pragma once
-#include "../../../base/sysfiles.h"
-
+#include <windows.h>
+#include <intrin.h>
 namespace pf {
 #ifdef _WIN32
 	// char[128]

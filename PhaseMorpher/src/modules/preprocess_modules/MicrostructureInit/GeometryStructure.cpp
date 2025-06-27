@@ -165,13 +165,13 @@ namespace pf {
 						REAL radian[] = { AngleToRadians(layer_input_polyhedron_value[2][0].REAL_value), AngleToRadians(layer_input_polyhedron_value[2][1].REAL_value), AngleToRadians(layer_input_polyhedron_value[2][2].REAL_value) };
 						geo.polyhedron.set_rotation_radian_and_rotation_gauge(radian, rotation_gauge);
 					}
-					if (model_parameters::is_phi_field_on) {
+					if (phi_parameters::is_phi_field_on) {
 						string layer_phi_key = "Preprocess.Microstructure.geometry_layer_" + to_string(layer_index) + ".phi";
 						InputFileReader::get_instance()->read_REAL_value(layer_phi_key, geo.phi, true);
 						string layer_norm_key = "Preprocess.Microstructure.geometry_layer_" + to_string(layer_index) + ".is_normalized";
 						InputFileReader::get_instance()->read_bool_value(layer_norm_key, geo.isNormalized, true);
 					}
-					if (model_parameters::is_con_field_on) {
+					if (con_parameters::is_con_field_on) {
 						WriteDebugFile("# .con = ( comp_0_value, comp_1_value, ... ) \n");
 						string layer_x_key = "Preprocess.Microstructure.geometry_layer_" + to_string(layer_index) + ".con", layer_x_input = "()";
 						geo.con.resize(0);
@@ -182,7 +182,7 @@ namespace pf {
 							check_con_size(int(geo.con.size()));
 						}
 					}
-					if (model_parameters::is_temp_field_on) {
+					if (temp_parameters::is_temp_field_on) {
 						string layer_temp_key = "Preprocess.Microstructure.geometry_layer_" + to_string(layer_index) + ".temp";
 						InputFileReader::get_instance()->read_REAL_value(layer_temp_key, geo.temperature, true);
 					}
@@ -273,7 +273,6 @@ namespace pf {
 		}
 
 		void definiteNucleation() {
-			using namespace simulation_mesh;
 			using namespace microstructure_init;
 			bool _creatNewStorage = true;
 			for (auto geo = nucleation_box.geometry_box.begin(); geo < nucleation_box.geometry_box.end();) {
@@ -285,12 +284,12 @@ namespace pf {
 							geo->phi = 0.0;
 					}
 					if (geo->geometryProperty == Geometry::Geo_Ellipsoid) {
-						if (model_parameters::is_phi_field_on) {
+						if (phi_parameters::is_phi_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < simulation_mesh::phase_field.Nz(); z++)
-								for (int y = 0; y < simulation_mesh::phase_field.Ny(); y++)
-									for (int x = 0; x < simulation_mesh::phase_field.Nx(); x++) {
-										PhaseFieldPoint& point = simulation_mesh::phase_field(x, y, z);
+							for (int z = 0; z < phi_parameters::phase_field.Nz(); z++)
+								for (int y = 0; y < phi_parameters::phase_field.Ny(); y++)
+									for (int x = 0; x < phi_parameters::phase_field.Nx(); x++) {
+										PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
 										// -
 										Vector3 p(x - geo->ellipSolid.core.x, y - geo->ellipSolid.core.y, z - geo->ellipSolid.core.z);
 										p.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->ellipSolid.radian_x, geo->ellipSolid.radian_y, geo->ellipSolid.radian_z),
@@ -303,11 +302,11 @@ namespace pf {
 										if (!geo->isReverseRegion && check0) {
 											if (geo->isNormalized) {
 												REAL sum_phis = 0.0;
-												for (int index = 0; index < model_parameters::phi_number; index++)
+												for (int index = 0; index < phi_parameters::phi_number; index++)
 													if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 														sum_phis += point.phi[index];
 												if (sum_phis > SYS_EPSILON) {
-													for (int index = 0; index < model_parameters::phi_number; index++) {
+													for (int index = 0; index < phi_parameters::phi_number; index++) {
 														if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 															point.phi[index] *= (1 - geo->phi) / sum_phis;
 													}
@@ -318,11 +317,11 @@ namespace pf {
 										else if (geo->isReverseRegion && !check0) {
 											if (geo->isNormalized) {
 												REAL sum_phis = 0.0;
-												for (int index = 0; index < model_parameters::phi_number; index++)
+												for (int index = 0; index < phi_parameters::phi_number; index++)
 													if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 														sum_phis += point.phi[index];
 												if (sum_phis > SYS_EPSILON) {
-													for (int index = 0; index < model_parameters::phi_number; index++) {
+													for (int index = 0; index < phi_parameters::phi_number; index++) {
 														if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 															point.phi[index] *= (1 - geo->phi) / sum_phis;
 													}
@@ -332,12 +331,12 @@ namespace pf {
 										}
 									}
 						}
-						if (model_parameters::is_con_field_on) {
+						if (con_parameters::is_con_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < concentration_field.Nz(); z++)
-								for (int y = 0; y < concentration_field.Ny(); y++)
-									for (int x = 0; x < concentration_field.Nx(); x++) {
-										ConcentrationFieldPoint& point = concentration_field(x, y, z);
+							for (int z = 0; z < con_parameters::concentration_field.Nz(); z++)
+								for (int y = 0; y < con_parameters::concentration_field.Ny(); y++)
+									for (int x = 0; x < con_parameters::concentration_field.Nx(); x++) {
+										ConcentrationFieldPoint& point = con_parameters::concentration_field(x, y, z);
 										// -
 										Vector3 p(x - geo->ellipSolid.core.x, y - geo->ellipSolid.core.y, z - geo->ellipSolid.core.z);
 										p.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->ellipSolid.radian_x, geo->ellipSolid.radian_y, geo->ellipSolid.radian_z),
@@ -355,12 +354,12 @@ namespace pf {
 										}
 									}
 						}
-						if (model_parameters::is_temp_field_on) {
+						if (temp_parameters::is_temp_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < temperature_field.Nz(); z++)
-								for (int y = 0; y < temperature_field.Ny(); y++)
-									for (int x = 0; x < temperature_field.Nx(); x++) {
-										TemperatureFieldPoint& point = temperature_field(x, y, z);
+							for (int z = 0; z < temp_parameters::temperature_field.Nz(); z++)
+								for (int y = 0; y < temp_parameters::temperature_field.Ny(); y++)
+									for (int x = 0; x < temp_parameters::temperature_field.Nx(); x++) {
+										TemperatureFieldPoint& point = temp_parameters::temperature_field(x, y, z);
 										// -
 										Vector3 p(x - geo->ellipSolid.core.x, y - geo->ellipSolid.core.y, z - geo->ellipSolid.core.z);
 										p.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->ellipSolid.radian_x, geo->ellipSolid.radian_y, geo->ellipSolid.radian_z),
@@ -379,17 +378,17 @@ namespace pf {
 									}
 						}
 						stringstream report;
-						report << "> A new Ellipsoid for grain : " << to_string(geo->phaseIndex) << " phase : " << materials_system::PHASES[model_parameters::phi_property[geo->phaseIndex]] << " has been initialized at position ( "
+						report << "> A new Ellipsoid for grain : " << to_string(geo->phaseIndex) << " phase : " << materials_system::PHASES[phi_parameters::phi_property[geo->phaseIndex]] << " has been initialized at position ( "
 							<< geo->ellipSolid.core.x << ", " << geo->ellipSolid.core.y << ", " << geo->ellipSolid.core.z << " )." << std::endl;
 						WriteLog(report.str());
 					}
 					else if (geo->geometryProperty == Geometry::Geo_Polyhedron) {
-						if (model_parameters::is_phi_field_on) {
+						if (phi_parameters::is_phi_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < phase_field.Nz(); z++)
-								for (int y = 0; y < phase_field.Ny(); y++)
-									for (int x = 0; x < phase_field.Nx(); x++) {
-										PhaseFieldPoint& point = phase_field(x, y, z);
+							for (int z = 0; z < phi_parameters::phase_field.Nz(); z++)
+								for (int y = 0; y < phi_parameters::phase_field.Ny(); y++)
+									for (int x = 0; x < phi_parameters::phase_field.Nx(); x++) {
+										PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
 										// -
 										Vector3 pv(x - geo->polyhedron.point_inside_polyhedron.x, y - geo->polyhedron.point_inside_polyhedron.y, z - geo->polyhedron.point_inside_polyhedron.z);
 										pv.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->polyhedron.radian_x, geo->polyhedron.radian_y, geo->polyhedron.radian_z),
@@ -403,11 +402,11 @@ namespace pf {
 										if (!geo->isReverseRegion && check0) {
 											if (geo->isNormalized) {
 												REAL sum_phis = 0.0;
-												for (int index = 0; index < model_parameters::phi_number; index++)
+												for (int index = 0; index < phi_parameters::phi_number; index++)
 													if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 														sum_phis += point.phi[index];
 												if (sum_phis > SYS_EPSILON) {
-													for (int index = 0; index < model_parameters::phi_number; index++) {
+													for (int index = 0; index < phi_parameters::phi_number; index++) {
 														if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 															point.phi[index] *= (1 - geo->phi) / sum_phis;
 													}
@@ -418,11 +417,11 @@ namespace pf {
 										else if (geo->isReverseRegion && !check0) {
 											if (geo->isNormalized) {
 												REAL sum_phis = 0.0;
-												for (int index = 0; index < model_parameters::phi_number; index++)
+												for (int index = 0; index < phi_parameters::phi_number; index++)
 													if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 														sum_phis += point.phi[index];
 												if (sum_phis > SYS_EPSILON) {
-													for (int index = 0; index < model_parameters::phi_number; index++) {
+													for (int index = 0; index < phi_parameters::phi_number; index++) {
 														if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 															point.phi[index] *= (1 - geo->phi) / sum_phis;
 													}
@@ -432,12 +431,12 @@ namespace pf {
 										}
 									};
 						}
-						if (model_parameters::is_con_field_on) {
+						if (con_parameters::is_con_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < concentration_field.Nz(); z++)
-								for (int y = 0; y < concentration_field.Ny(); y++)
-									for (int x = 0; x < concentration_field.Nx(); x++) {
-										ConcentrationFieldPoint& point = concentration_field(x, y, z);
+							for (int z = 0; z < con_parameters::concentration_field.Nz(); z++)
+								for (int y = 0; y < con_parameters::concentration_field.Ny(); y++)
+									for (int x = 0; x < con_parameters::concentration_field.Nx(); x++) {
+										ConcentrationFieldPoint& point = con_parameters::concentration_field(x, y, z);
 										Vector3 pv(x - geo->polyhedron.point_inside_polyhedron.x, y - geo->polyhedron.point_inside_polyhedron.y, z - geo->polyhedron.point_inside_polyhedron.z);
 										pv.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->polyhedron.radian_x, geo->polyhedron.radian_y, geo->polyhedron.radian_z),
 											geo->polyhedron.rotationGauge));
@@ -455,12 +454,12 @@ namespace pf {
 										}
 									};
 						}
-						if (model_parameters::is_temp_field_on) {
+						if (temp_parameters::is_temp_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < temperature_field.Nz(); z++)
-								for (int y = 0; y < temperature_field.Ny(); y++)
-									for (int x = 0; x < temperature_field.Nx(); x++) {
-										TemperatureFieldPoint& point = temperature_field(x, y, z);
+							for (int z = 0; z < temp_parameters::temperature_field.Nz(); z++)
+								for (int y = 0; y < temp_parameters::temperature_field.Ny(); y++)
+									for (int x = 0; x < temp_parameters::temperature_field.Nx(); x++) {
+										TemperatureFieldPoint& point = temp_parameters::temperature_field(x, y, z);
 										Vector3 pv(x - geo->polyhedron.point_inside_polyhedron.x, y - geo->polyhedron.point_inside_polyhedron.y, z - geo->polyhedron.point_inside_polyhedron.z);
 										pv.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->polyhedron.radian_x, geo->polyhedron.radian_y, geo->polyhedron.radian_z),
 											geo->polyhedron.rotationGauge));
@@ -481,17 +480,17 @@ namespace pf {
 									};
 						}
 						stringstream report;
-						report << "> A new Polygon for grain : " << to_string(geo->phaseIndex) << " phase: " << materials_system::PHASES[model_parameters::phi_property[geo->phaseIndex]] << " has been initialized at position ( "
+						report << "> A new Polygon for grain : " << to_string(geo->phaseIndex) << " phase: " << materials_system::PHASES[phi_parameters::phi_property[geo->phaseIndex]] << " has been initialized at position ( "
 							<< geo->polyhedron.point_inside_polyhedron.x << ", " << geo->polyhedron.point_inside_polyhedron.y << ", " << geo->polyhedron.point_inside_polyhedron.z << " )." << std::endl;
 						WriteLog(report.str());
 					}
 					else if (geo->geometryProperty == Geometry::Geo_SegmentedCylinder) {
-						if (model_parameters::is_phi_field_on) {
+						if (phi_parameters::is_phi_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < phase_field.Nz(); z++)
-								for (int y = 0; y < phase_field.Ny(); y++)
-									for (int x = 0; x < phase_field.Nx(); x++) {
-										PhaseFieldPoint& point = phase_field(x, y, z);
+							for (int z = 0; z < phi_parameters::phase_field.Nz(); z++)
+								for (int y = 0; y < phi_parameters::phase_field.Ny(); y++)
+									for (int x = 0; x < phi_parameters::phase_field.Nx(); x++) {
+										PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
 										// Vector3 p(x, y, z);
 										Vector3 p(x - geo->cylinder.geometric_center.x, y - geo->cylinder.geometric_center.y, z - geo->cylinder.geometric_center.z);
 										p.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->cylinder.radian_x, geo->cylinder.radian_y, geo->cylinder.radian_z),
@@ -504,11 +503,11 @@ namespace pf {
 										if (!geo->isReverseRegion && check0) {
 											if (geo->isNormalized) {
 												REAL sum_phis = 0.0;
-												for (int index = 0; index < model_parameters::phi_number; index++)
+												for (int index = 0; index < phi_parameters::phi_number; index++)
 													if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 														sum_phis += point.phi[index];
 												if (sum_phis > SYS_EPSILON) {
-													for (int index = 0; index < model_parameters::phi_number; index++) {
+													for (int index = 0; index < phi_parameters::phi_number; index++) {
 														if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 															point.phi[index] *= (1 - geo->phi) / sum_phis;
 													}
@@ -519,11 +518,11 @@ namespace pf {
 										else if (geo->isReverseRegion && !check0) {
 											if (geo->isNormalized) {
 												REAL sum_phis = 0.0;
-												for (int index = 0; index < model_parameters::phi_number; index++)
+												for (int index = 0; index < phi_parameters::phi_number; index++)
 													if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 														sum_phis += point.phi[index];
 												if (sum_phis > SYS_EPSILON) {
-													for (int index = 0; index < model_parameters::phi_number; index++) {
+													for (int index = 0; index < phi_parameters::phi_number; index++) {
 														if (point.phi[index] > SYS_EPSILON && index != geo->phaseIndex)
 															point.phi[index] *= (1 - geo->phi) / sum_phis;
 													}
@@ -533,12 +532,12 @@ namespace pf {
 										}
 									};
 						}
-						if (model_parameters::is_con_field_on) {
+						if (con_parameters::is_con_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < concentration_field.Nz(); z++)
-								for (int y = 0; y < concentration_field.Ny(); y++)
-									for (int x = 0; x < concentration_field.Nx(); x++) {
-										ConcentrationFieldPoint& point = concentration_field(x, y, z);
+							for (int z = 0; z < con_parameters::concentration_field.Nz(); z++)
+								for (int y = 0; y < con_parameters::concentration_field.Ny(); y++)
+									for (int x = 0; x < con_parameters::concentration_field.Nx(); x++) {
+										ConcentrationFieldPoint& point = con_parameters::concentration_field(x, y, z);
 										// Vector3 p(x, y, z);
 										Vector3 p(x - geo->cylinder.geometric_center.x, y - geo->cylinder.geometric_center.y, z - geo->cylinder.geometric_center.z);
 										p.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->cylinder.radian_x, geo->cylinder.radian_y, geo->cylinder.radian_z),
@@ -556,12 +555,12 @@ namespace pf {
 										}
 									};
 						}
-						if (model_parameters::is_temp_field_on) {
+						if (temp_parameters::is_temp_field_on) {
 #pragma omp parallel for
-							for (int z = 0; z < temperature_field.Nz(); z++)
-								for (int y = 0; y < temperature_field.Ny(); y++)
-									for (int x = 0; x < temperature_field.Nx(); x++) {
-										TemperatureFieldPoint& point = temperature_field(x, y, z);
+							for (int z = 0; z < temp_parameters::temperature_field.Nz(); z++)
+								for (int y = 0; y < temp_parameters::temperature_field.Ny(); y++)
+									for (int x = 0; x < temp_parameters::temperature_field.Nx(); x++) {
+										TemperatureFieldPoint& point = temp_parameters::temperature_field(x, y, z);
 										// Vector3 p(x, y, z);
 										Vector3 p(x - geo->cylinder.geometric_center.x, y - geo->cylinder.geometric_center.y, z - geo->cylinder.geometric_center.z);
 										p.do_rotate(RotationMatrix::rotationMatrix(Vector3(geo->cylinder.radian_x, geo->cylinder.radian_y, geo->cylinder.radian_z),
@@ -580,7 +579,7 @@ namespace pf {
 									}
 						}
 						stringstream report;
-						report << "> A new Segmented Cylinder for grain : " << to_string(geo->phaseIndex) << " phase: " << materials_system::PHASES[model_parameters::phi_property[geo->phaseIndex]] << " has been initialized at position ( "
+						report << "> A new Segmented Cylinder for grain : " << to_string(geo->phaseIndex) << " phase: " << materials_system::PHASES[phi_parameters::phi_property[geo->phaseIndex]] << " has been initialized at position ( "
 							<< geo->cylinder.geometric_center.x << ", " << geo->cylinder.geometric_center.y << ", " << geo->cylinder.geometric_center.z << " )." << std::endl;
 						WriteLog(report.str());
 					}
@@ -601,18 +600,18 @@ namespace pf {
 								point_set->points_phi[index] = 0.0;
 						}
 					}
-					if (model_parameters::is_phi_field_on) {
+					if (phi_parameters::is_phi_field_on) {
 #pragma omp parallel for
 						for (int point_index = 0; point_index < point_set->points.size(); point_index++) {
-							PhaseFieldPoint& point = phase_field(REAL_to_int(point_set->points[point_index].x),
+							PhaseFieldPoint& point = phi_parameters::phase_field(REAL_to_int(point_set->points[point_index].x),
 								REAL_to_int(point_set->points[point_index].y), REAL_to_int(point_set->points[point_index].z));
 							if (point_set->is_normalized) {
 								REAL sum_phis = 0.0;
-								for (int index = 0; index < model_parameters::phi_number; index++)
+								for (int index = 0; index < phi_parameters::phi_number; index++)
 									if (point.phi[index] > SYS_EPSILON && index != point_set->phaseIndex)
 										sum_phis += point.phi[index];
 								if (sum_phis > SYS_EPSILON) {
-									for (int index = 0; index < model_parameters::phi_number; index++) {
+									for (int index = 0; index < phi_parameters::phi_number; index++) {
 										if (point.phi[index] > SYS_EPSILON && index != point_set->phaseIndex)
 											point.phi[index] *= (1 - point_set->points_phi[point_index]) / sum_phis;
 									}
@@ -621,46 +620,30 @@ namespace pf {
 							point.phi[point_set->phaseIndex] = point_set->points_phi[point_index];
 						}
 					}
-					if (model_parameters::is_con_field_on) {
+					if (con_parameters::is_con_field_on) {
 #pragma omp parallel for
 						for (int point_index = 0; point_index < point_set->points.size(); point_index++) {
-							ConcentrationFieldPoint& point = concentration_field(REAL_to_int(point_set->points[point_index].x),
+							ConcentrationFieldPoint& point = con_parameters::concentration_field(REAL_to_int(point_set->points[point_index].x),
 								REAL_to_int(point_set->points[point_index].y), REAL_to_int(point_set->points[point_index].z));
 							point.con = point_set->con;
 						}
 					}
-					if (model_parameters::is_temp_field_on) {
+					if (temp_parameters::is_temp_field_on) {
 #pragma omp parallel for
 						for (int point_index = 0; point_index < point_set->points.size(); point_index++) {
-							TemperatureFieldPoint& point = temperature_field(REAL_to_int(point_set->points[point_index].x),
+							TemperatureFieldPoint& point = temp_parameters::temperature_field(REAL_to_int(point_set->points[point_index].x),
 								REAL_to_int(point_set->points[point_index].y), REAL_to_int(point_set->points[point_index].z));
 							point.temp = point_set->temperature;
 						}
 					}
 					stringstream report;
 					report << "> A new PointSet for grain : " << to_string(point_set->phaseIndex) << " phase : "
-						<< materials_system::PHASES[model_parameters::phi_property[point_set->phaseIndex]] << " has been initialized;" << std::endl;
+						<< materials_system::PHASES[phi_parameters::phi_property[point_set->phaseIndex]] << " has been initialized;" << std::endl;
 					WriteLog(report.str());
 					point_set = nucleation_box.point_set_box.erase(point_set);
 				}
 				else {
 					point_set++;
-				}
-			}
-			if (model_parameters::pair_wise_equation::is_phi_normalized) {
-				// - normalize phi
-				if (model_parameters::is_phi_field_on) {
-#pragma omp parallel for
-					for (int z = 0; z < phase_field.Nz(); z++)
-						for (int y = 0; y < phase_field.Ny(); y++)
-							for (int x = 0; x < phase_field.Nx(); x++) {
-								PhaseFieldPoint& point = phase_field(x, y, z);
-								REAL sum_phi = 0.0;
-								for (int index = 0; index < model_parameters::phi_number; index++)
-									sum_phi += point.phi[index];
-								for (int index = 0; index < model_parameters::phi_number; index++)
-									point.phi[index] /= sum_phi;
-							}
 				}
 			}
 		}

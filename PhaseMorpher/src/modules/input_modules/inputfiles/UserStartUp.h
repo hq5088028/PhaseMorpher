@@ -7,9 +7,7 @@ Modified:    Zihang Wang 2024.10;
 Email:       
 
 */
-
 #pragma once
-
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -24,7 +22,6 @@ Email:
 #include "Docs.h"
 #include "pm_info.h"
 #include "../../../tools/StringModify.h"
-
 namespace pf {
 	enum class StartOption { Default, Sequencial, Parallel, CWD, LastSimu, Choose, Path, Number };
 

@@ -22,6 +22,8 @@ This program is free software: you can redistribute it and/or modify it under th
 #include "PhaseField/PhaseFieldManager.h"
 #include "ConcentrationField/ConcentrationFieldManager.h"
 #include "TemperatureField/TemperatureFieldManager.h"
+// This library file is used to keep the model details confidential
+#pragma comment(lib, "lib/PMLib.lib")
 namespace pf {
 	inline void init_basic_time_mesh_parameters();
 	inline void init_simulation_system();

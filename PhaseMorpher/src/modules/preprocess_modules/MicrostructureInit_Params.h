@@ -656,7 +656,7 @@ namespace pf {
 		int grain_index;
 	};
 	inline void check_phi_index(int phi_index) {
-		if (phi_index < 0 || phi_index >= model_parameters::phi_number) {
+		if (phi_index < 0 || phi_index >= phi_parameters::phi_number) {
 			string _report = "> ERROR : Phi index = " + to_string(phi_index) + " is invalid !\n";
 			WriteDebugFile(_report);
 			WriteLog(_report);
@@ -664,18 +664,9 @@ namespace pf {
 		}
 	}
 	inline void check_con_size(int con_size) {
-		if (con_size != model_parameters::con_number) {
+		if (con_size != con_parameters::con_number) {
 			string _report = "> ERROR : Con size = " + to_string(con_size)
-				+ " is not equal to " + to_string(model_parameters::con_number) + " !\n";
-			WriteDebugFile(_report);
-			WriteLog(_report);
-			SYS_PROGRAM_STOP;
-		}
-	}
-	inline void check_con_size(size_t con_size) {
-		if (con_size != model_parameters::con_number) {
-			string _report = "> ERROR : Con size = " + to_string(con_size)
-				+ " is not equal to " + to_string(model_parameters::con_number) + " !\n";
+				+ " is not equal to " + to_string(con_parameters::con_number) + " !\n";
 			WriteDebugFile(_report);
 			WriteLog(_report);
 			SYS_PROGRAM_STOP;

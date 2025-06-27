@@ -30,10 +30,10 @@ namespace pf {
 					bool all_valid = true;
 					if (datafile_report.is_phi_mesh) {
 						bool line_valid = true;
-						if (datafile_report.PNx == simulation_mesh::phase_field.Nx()
-							&& datafile_report.PNy == simulation_mesh::phase_field.Ny()
-							&& datafile_report.PNz == simulation_mesh::phase_field.Nz()
-							&& datafile_report.phi_number == model_parameters::phi_number) {
+						if (datafile_report.PNx == phi_parameters::phase_field.Nx()
+							&& datafile_report.PNy == phi_parameters::phase_field.Ny()
+							&& datafile_report.PNz == phi_parameters::phase_field.Nz()
+							&& datafile_report.phi_number == phi_parameters::phi_number) {
 							line_valid = true;
 						}
 						else {
@@ -56,32 +56,31 @@ namespace pf {
 		}
 		// -
 		inline void init_microstructure_pre_i() {
-			using namespace simulation_mesh;
 			if (is_datafile_init) {
 				WriteLog("> Open datafile : " + datafile_path + "\n");
 				functions::init_mesh_with_datafile(datafile_report, datafile_path);
 			}
 			else {
-				if (model_parameters::is_phi_field_on) {
+				if (phi_parameters::is_phi_field_on) {
 #pragma omp parallel for
-					for (int x = 0; x < phase_field.Nx(); x++)
-						for (int y = 0; y < phase_field.Ny(); y++)
-							for (int z = 0; z < phase_field.Nz(); z++)
-								phase_field(x, y, z).phi[matrix_phi_index] = matrix_phi_value;
+					for (int x = 0; x < phi_parameters::phase_field.Nx(); x++)
+						for (int y = 0; y < phi_parameters::phase_field.Ny(); y++)
+							for (int z = 0; z < phi_parameters::phase_field.Nz(); z++)
+								phi_parameters::phase_field(x, y, z).phi[matrix_phi_index] = matrix_phi_value;
 				}
-				if (model_parameters::is_con_field_on) {
+				if (con_parameters::is_con_field_on) {
 #pragma omp parallel for
-					for (int x = 0; x < concentration_field.Nx(); x++)
-						for (int y = 0; y < concentration_field.Ny(); y++)
-							for (int z = 0; z < concentration_field.Nz(); z++)
-								concentration_field(x, y, z).con = matrix_con;
+					for (int x = 0; x < con_parameters::concentration_field.Nx(); x++)
+						for (int y = 0; y < con_parameters::concentration_field.Ny(); y++)
+							for (int z = 0; z < con_parameters::concentration_field.Nz(); z++)
+								con_parameters::concentration_field(x, y, z).con = matrix_con;
 				}
-				if (model_parameters::is_temp_field_on) {
+				if (temp_parameters::is_temp_field_on) {
 #pragma omp parallel for
-					for (int x = 0; x < temperature_field.Nx(); x++)
-						for (int y = 0; y < temperature_field.Ny(); y++)
-							for (int z = 0; z < temperature_field.Nz(); z++)
-								temperature_field(x, y, z).temp = matrix_temperature;
+					for (int x = 0; x < temp_parameters::temperature_field.Nx(); x++)
+						for (int y = 0; y < temp_parameters::temperature_field.Ny(); y++)
+							for (int z = 0; z < temp_parameters::temperature_field.Nz(); z++)
+								temp_parameters::temperature_field(x, y, z).temp = matrix_temperature;
 				}
 				// - normal init structure
 				geometry_structure::definiteNucleation();
@@ -139,7 +138,7 @@ namespace pf {
 			}
 			else {
 				// - init matrix 
-				if (model_parameters::is_phi_field_on) {
+				if (phi_parameters::is_phi_field_on) {
 					string matrix_key = "Preprocess.Microstructure.matrix_phi", matrix_string = "()";
 					WriteDebugFile("# .matrix_phi = ( phi_index, phi_value ) \n");
 					if (InputFileReader::get_instance()->read_string_value(matrix_key, matrix_string, true)) {
@@ -153,10 +152,10 @@ namespace pf {
 						check_phi_index(matrix_phi_index);
 					}
 				}
-				if (model_parameters::is_con_field_on) {
+				if (con_parameters::is_con_field_on) {
 					string matrix_key = "Preprocess.Microstructure.matrix_con", matrix_string = "()";
 					WriteDebugFile("# .matrix_con = ( comp_0_value, comp_1_value, ... ) \n");
-					matrix_con.resize(model_parameters::con_number);
+					matrix_con.resize(con_parameters::con_number);
 					if (InputFileReader::get_instance()->read_string_value(matrix_key, matrix_string, true)) {
 						vector<input_value> matrix_value = 
 							InputFileReader::get_instance()->trans_matrix_1d_const_to_input_value(InputValueType::IVType_REAL, matrix_key, matrix_string, true);
@@ -165,7 +164,7 @@ namespace pf {
 						check_con_size(int(matrix_con.size()));
 					}
 				}
-				if (model_parameters::is_temp_field_on) {
+				if (temp_parameters::is_temp_field_on) {
 					string matrix_key = "Preprocess.Microstructure.matrix_temperature";
 					InputFileReader::get_instance()->read_REAL_value(matrix_key, matrix_temperature, true);
 				}

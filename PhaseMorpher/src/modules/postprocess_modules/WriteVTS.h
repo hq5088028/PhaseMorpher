@@ -116,17 +116,17 @@ namespace pf {
 				x_begin = 0;
 				y_begin = 0;
 				z_begin = 0;
-				x_end = simulation_mesh::phase_field.Nx() - 1;
-				y_end = simulation_mesh::phase_field.Ny() - 1;
-				z_end = simulation_mesh::phase_field.Nz() - 1;
+				x_end = phi_parameters::phase_field.Nx() - 1;
+				y_end = phi_parameters::phase_field.Ny() - 1;
+				z_end = phi_parameters::phase_field.Nz() - 1;
 			}
 			else {
-				x_begin = simulation_mesh::phase_field.X_BEGIN();
-				y_begin = simulation_mesh::phase_field.Y_BEGIN();
-				z_begin = simulation_mesh::phase_field.Z_BEGIN();
-				x_end = simulation_mesh::phase_field.X_END();
-				y_end = simulation_mesh::phase_field.Y_END();
-				z_end = simulation_mesh::phase_field.Z_END();
+				x_begin = phi_parameters::phase_field.X_BEGIN();
+				y_begin = phi_parameters::phase_field.Y_BEGIN();
+				z_begin = phi_parameters::phase_field.Z_BEGIN();
+				x_end = phi_parameters::phase_field.X_END();
+				y_end = phi_parameters::phase_field.Y_END();
+				z_end = phi_parameters::phase_field.Z_END();
 			}
 		}
 	}

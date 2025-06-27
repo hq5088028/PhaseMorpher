@@ -1,5 +1,4 @@
 #include "license.h"
-
 namespace pf{
 	enum ACCOUNT { ROOT };
 	static vector<string> _account = { "PhaseMorpher" };
@@ -148,9 +147,6 @@ namespace pf{
 			fout.close();
 			return true;
 		}
-		void deinit_license() {
-			license_private::write_current_time_into_license();
-		}
 	}
 	namespace license {
 		bool is_license() {
@@ -282,10 +278,9 @@ namespace pf{
 				printf_color_on_control("> (license) Activate license success !");
 				cout << endl;
 			}
-			load_a_new_module(default_module_function, default_module_function, default_module_function,
-				default_module_function, default_module_function, default_module_function,
-				default_module_function, default_module_function, default_module_function,
-				license_private::deinit_license);
+		}
+		void deinit_license() {
+			license_private::write_current_time_into_license();
 		}
 	}
 }

@@ -6,7 +6,10 @@ Modified:    Qi Huang 2025.03;
 
 */
 #pragma once
-#include "../base/sysfiles.h"
+// #include "../base/sysfiles.h"
+#include <conio.h>
+#include <iostream>
+#include <fstream>
 namespace pf {
 	//printf("\x1b[%d;%dm%s\x1b[%dm", backcolor, frountcolor, str, control);
 	/*第一个% d:backcolor表示显示字符串的背景颜色, 其值如下：

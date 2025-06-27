@@ -5,6 +5,7 @@
 #include "../input_modules/ioFiles_Params.h"
 #include "../model_modules/PhaseField/PhaseField_Params.h"
 #include "../model_modules/ConcentrationField/ConcentrationField_Params.h"
+#include "../model_modules/TemperatureField/TemperatureField_Params.h"
 namespace pf {
 	namespace write_mesh_data {
 		const std::string mainName = "MeshData";
@@ -69,19 +70,19 @@ namespace pf {
 			{ ///< defined in sequence(same with read)
 				Data_MeshInfo mesh_info;
 				mesh_info.is_phi_mesh = is_phi_mesh;
-				mesh_info.phi_number = model_parameters::phi_number;
-				mesh_info.PNx = simulation_mesh::phase_field.Nx();
-				mesh_info.PNy = simulation_mesh::phase_field.Ny();
-				mesh_info.PNz = simulation_mesh::phase_field.Nz();
+				mesh_info.phi_number = phi_parameters::phi_number;
+				mesh_info.PNx = phi_parameters::phase_field.Nx();
+				mesh_info.PNy = phi_parameters::phase_field.Ny();
+				mesh_info.PNz = phi_parameters::phase_field.Nz();
 				mesh_info.is_con_mesh = is_con_mesh;
-				mesh_info.con_number = model_parameters::con_number;
-				mesh_info.CNx = simulation_mesh::phase_field.Nx();
-				mesh_info.CNy = simulation_mesh::phase_field.Ny();
-				mesh_info.CNz = simulation_mesh::phase_field.Nz();
+				mesh_info.con_number = con_parameters::con_number;
+				mesh_info.CNx = con_parameters::concentration_field.Nx();
+				mesh_info.CNy = con_parameters::concentration_field.Ny();
+				mesh_info.CNz = con_parameters::concentration_field.Nz();
 				mesh_info.is_temp_mesh = is_temp_mesh;
-				mesh_info.TNx = simulation_mesh::phase_field.Nx();
-				mesh_info.TNy = simulation_mesh::phase_field.Ny();
-				mesh_info.TNz = simulation_mesh::phase_field.Nz();
+				mesh_info.TNx = temp_parameters::temperature_field.Nx();
+				mesh_info.TNy = temp_parameters::temperature_field.Ny();
+				mesh_info.TNz = temp_parameters::temperature_field.Nz();
 				mesh_info.is_fluid_mesh = is_fluid_mesh;
 				mesh_info.FNx = 0;
 				mesh_info.FNy = 0;
@@ -92,7 +93,7 @@ namespace pf {
 					for (int x = 0; x < mesh_info.PNx; x++)
 						for (int y = 0; y < mesh_info.PNy; y++)
 							for (int z = 0; z < mesh_info.PNz; z++) {
-								PhaseFieldPoint& point = simulation_mesh::phase_field(x, y, z);
+								PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
 								for (int index = 0; index < mesh_info.phi_number; index++)
 									fout.write((const char*)&point.phi[index], sizeof(REAL));
 							}
@@ -101,7 +102,7 @@ namespace pf {
 					for (int x = 0; x < mesh_info.CNx; x++)
 						for (int y = 0; y < mesh_info.CNy; y++)
 							for (int z = 0; z < mesh_info.CNz; z++) {
-								ConcentrationFieldPoint& point = simulation_mesh::concentration_field(x, y, z);
+								ConcentrationFieldPoint& point = con_parameters::concentration_field(x, y, z);
 								for (int index = 0; index < mesh_info.con_number; index++)
 									fout.write((const char*)&point.con[index], sizeof(REAL));
 							}
@@ -110,7 +111,7 @@ namespace pf {
 					for (int x = 0; x < mesh_info.TNx; x++)
 						for (int y = 0; y < mesh_info.TNy; y++)
 							for (int z = 0; z < mesh_info.TNz; z++)
-								fout.write((const char*)&simulation_mesh::temperature_field(x, y, z).temp, sizeof(REAL));
+								fout.write((const char*)&temp_parameters::temperature_field(x, y, z).temp, sizeof(REAL));
 				}
 				if (mesh_info.is_fluid_mesh) {
 					// - 
@@ -130,14 +131,14 @@ namespace pf {
 			///< read for mesh
 			REAL data_buff = 0;
 			if (mesh_info.is_phi_mesh) {
-				int Nx = simulation_mesh::phase_field.Nx(), Ny = simulation_mesh::phase_field.Ny(), 
-					Nz = simulation_mesh::phase_field.Nz(),
-					phi_number = model_parameters::phi_number;
+				int Nx = phi_parameters::phase_field.Nx(), Ny = phi_parameters::phase_field.Ny(),
+					Nz = phi_parameters::phase_field.Nz(),
+					phi_number = phi_parameters::phi_number;
 				for (int x = 0; x < mesh_info.PNx; x++)
 					for (int y = 0; y < mesh_info.PNy; y++)
 						for (int z = 0; z < mesh_info.PNz; z++) {
 							if (x < Nx && y < Ny && z < Nz) {
-								PhaseFieldPoint& point = simulation_mesh::phase_field(x, y, z);
+								PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
 								for (int index = 0; index < mesh_info.phi_number; index++) {
 									fin.read((char*)&data_buff, sizeof(REAL));
 									if (index < phi_number)
@@ -151,14 +152,14 @@ namespace pf {
 						}
 			}
 			if (mesh_info.is_con_mesh) {
-				int Nx = simulation_mesh::concentration_field.Nx(), Ny = simulation_mesh::concentration_field.Ny(), 
-					Nz = simulation_mesh::concentration_field.Nz(),
-					con_number = model_parameters::con_number;
+				int Nx = con_parameters::concentration_field.Nx(), Ny = con_parameters::concentration_field.Ny(),
+					Nz = con_parameters::concentration_field.Nz(),
+					con_number = con_parameters::con_number;
 				for (int x = 0; x < mesh_info.CNx; x++)
 					for (int y = 0; y < mesh_info.CNy; y++)
 						for (int z = 0; z < mesh_info.CNz; z++) {
 							if (x < Nx && y < Ny && z < Nz) {
-								ConcentrationFieldPoint& point = simulation_mesh::concentration_field(x, y, z);
+								ConcentrationFieldPoint& point = con_parameters::concentration_field(x, y, z);
 								for (int index = 0; index < mesh_info.con_number; index++) {
 									fin.read((char*)&data_buff, sizeof(REAL));
 									if (index < con_number)
@@ -172,13 +173,13 @@ namespace pf {
 						}
 			}
 			if (mesh_info.is_temp_mesh) {
-				int Nx = simulation_mesh::temperature_field.Nx(), Ny = simulation_mesh::temperature_field.Ny(), 
-					Nz = simulation_mesh::temperature_field.Nz();
+				int Nx = temp_parameters::temperature_field.Nx(), Ny = temp_parameters::temperature_field.Ny(),
+					Nz = temp_parameters::temperature_field.Nz();
 				for (int x = 0; x < mesh_info.TNx; x++)
 					for (int y = 0; y < mesh_info.TNy; y++)
 						for (int z = 0; z < mesh_info.TNz; z++) {
 							if (x < Nx && y < Ny && z < Nz) {
-								fin.read((char*)&simulation_mesh::temperature_field(x, y, z).temp, sizeof(REAL));
+								fin.read((char*)&temp_parameters::temperature_field(x, y, z).temp, sizeof(REAL));
 							}
 							else {
 								fin.read((char*)&data_buff, sizeof(REAL));

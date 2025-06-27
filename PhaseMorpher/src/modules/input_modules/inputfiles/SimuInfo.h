@@ -7,7 +7,6 @@ Modified:    Zihang Wang 2024.10;
 Email:       
 
 */
-
 #pragma once
 #include <iostream>
 #include <string>
@@ -15,7 +14,6 @@ Email:
 #include "../../../tools/ioModify.h"
 // Stores the path of the execution. Powered by "whereami.c" & whereami.h, by Gregory Pakosz
 // Packaged with lambda expression.
-
 namespace pf {
 	struct SimuInfo {
 		std::string simu_path{};

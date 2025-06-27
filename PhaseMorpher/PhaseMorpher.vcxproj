@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="PhaseMorpher.cpp" />
     <ClCompile Include="src\modules\input_modules\license\license.cpp" />
-    <ClCompile Include="src\modules\model_modules\PhaseField\PairwiseEquation.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\Bmp24Structure.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\GeometryStructure.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\PorousStructure.cpp" />
@@ -30,10 +29,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\base\data_container.h" />
+    <ClInclude Include="src\base\MACRO_DEF.h" />
     <ClInclude Include="src\base\sysfiles.h" />
     <ClInclude Include="src\launcher.h" />
     <ClInclude Include="src\modules\data_struct\Mesh_0.h" />
-    <ClInclude Include="src\modules\data_struct\Point_0.h" />
     <ClInclude Include="src\modules\data_struct\RotationMatrix.h" />
     <ClInclude Include="src\modules\data_struct\VectorMatrix.h" />
     <ClInclude Include="src\modules\input_modules\inputfiles\Docs.h" />
@@ -53,13 +52,18 @@
     <ClInclude Include="src\modules\MainIterator.h" />
     <ClInclude Include="src\modules\MainIterator_Params.h" />
     <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldManager.h" />
+    <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldModels\GrandPotentialEquation.h" />
+    <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldPoints.h" />
     <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationField_Params.h" />
     <ClInclude Include="src\modules\model_modules\ModelModulesManager.h" />
     <ClInclude Include="src\modules\model_modules\Model_Params.h" />
-    <ClInclude Include="src\modules\model_modules\PhaseField\PairwiseEquation.h" />
+    <ClInclude Include="src\modules\model_modules\PhaseField\GrainsOrientations.h" />
     <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldManager.h" />
+    <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldModels\PairwiseEquation.h" />
+    <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldPoints.h" />
     <ClInclude Include="src\modules\model_modules\PhaseField\PhaseField_Params.h" />
     <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureFieldManager.h" />
+    <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureFieldPoints.h" />
     <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureField_Params.h" />
     <ClInclude Include="src\modules\Module.h" />
     <ClInclude Include="src\modules\postprocess_modules\AutoDeltTime.h" />

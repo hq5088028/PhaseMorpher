@@ -1,5 +1,7 @@
 #pragma once
-#include "../../base/sysfiles.h"
+#include "../../base/MACRO_DEF.h"
+#include <vector>
+#include <iostream>
 namespace pf {
 	enum BoundaryCondition { FIXED, PERIODIC, ADIABATIC };
 
@@ -42,6 +44,9 @@ namespace pf {
 
 		// - find element directly
 		T& operator()(int x, int y, int z) {
+			return data[MESH_INDEX(x, y, z, nx, ny)];
+		}
+		T& at(int x, int y, int z) {
 			return data[MESH_INDEX(x, y, z, nx, ny)];
 		}
 

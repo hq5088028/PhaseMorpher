@@ -5,10 +5,7 @@ Created:     Qi Huang 2023.04
 Modified:    Qi Huang 2023.04;
 
 */
-
-
 #pragma once
-#include "../base/sysfiles.h"
 #include "mathTools.h"
 using namespace std;
 namespace pf {
@@ -52,8 +49,11 @@ namespace pf {
 		{
 			const char* bmpname = fileName.c_str();
 			BITMAPINFOHEADER head;  //BITMAPINFOHEADER为编译系统自带的结构体，故直接使用
-			FILE* file = fopen(bmpname, "rb");//打开文件，并且以二进制方式读取
-			if (!file)               //文件是否能打开
+			FILE* file;
+			errno_t err = fopen_s(&file, bmpname, "rb");
+			// FILE* file = fopen(bmpname, "rb");//打开文件，并且以二进制方式读取
+
+			if (err != 0)               //文件是否能打开
 			{
 				printf("file dont exist, please check !.\n");
 				return 0;//0默认为打开的文件不正确
@@ -78,7 +78,9 @@ namespace pf {
 		{
 			const char* bmpname = fileName.c_str();
 			BITMAPINFOHEADER head;//head为位图信息头结构体
-			FILE* file = fopen(bmpname, "rb");//以二进制方式打开
+			FILE* file;
+			fopen_s(&file, bmpname, "rb");
+			// FILE* file = fopen(bmpname, "rb");//以二进制方式打开
 			fseek(file, sizeof(BITMAPFILEHEADER), 0);//跳过位图文件头
 			fread(&head, sizeof(BITMAPINFOHEADER), 1, file);//将位图信息头读入head
 			bmp_width = head.biWidth;//图片宽
@@ -99,7 +101,9 @@ namespace pf {
 			int colortablesize = 0;//颜色表大小，彩色图像为0
 			BITMAPFILEHEADER filehead;//位图文件头
 			BITMAPINFOHEADER datehead;//位图信息头
-			FILE* file = fopen(newbmpname, "wb");//打开文件并以二进制方式写入
+			FILE* file;
+			fopen_s(&file, newbmpname, "wb");
+			// FILE* file = fopen(newbmpname, "wb");//打开文件并以二进制方式写入
 			if (!file) return 0;//打开不成功
 			filehead.bfType = 0x4D42;//文件为bmp格式
 			filehead.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + colortablesize + linebyte * bmp_height;//位图文件大小

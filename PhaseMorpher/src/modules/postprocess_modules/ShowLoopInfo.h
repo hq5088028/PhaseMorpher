@@ -16,8 +16,8 @@ namespace pf {
 			pf::PhaseFieldPoint phi_info = data_statistics_functions::statistical_phi();
 			stringstream log;
 			log << "> PHI CON TEMP information :" << endl;
-			for (int index = 0; index < model_parameters::phi_number; index++)
-				log << ">  Phase_" << index << "(" << materials_system::PHASES[model_parameters::phi_property[index]] << ")" << " : "
+			for (int index = 0; index < phi_parameters::phi_number; index++)
+				log << ">  Phase_" << index << "(" << materials_system::PHASES[phi_parameters::phi_property[index]] << ")" << " : "
 				<< setprecision(5) << phi_info.phi[index] * 100 << " %" << endl;
 			WriteLog(log.str());
 		}
@@ -34,8 +34,8 @@ namespace pf {
 				log << "# Total " << main_iterator::Current_ITE_step << " steps used " << setprecision(3) << timer::total_duration_sec(main_iterator::t_total_begin) << "(secs.)." << endl;
 				log << "# Real simulation time is " << setprecision(3) << time_parameters::Real_Time << " (secs.)" << endl;
 				log << "#----------------------------------------------------------------------------------------------------" << endl;
-				for (int index = 0; index < model_parameters::phi_number; index++)
-					log << "#  Phase_" << index << "(" << materials_system::PHASES[model_parameters::phi_property[index]] << ")" << " : "
+				for (int index = 0; index < phi_parameters::phi_number; index++)
+					log << "#  Phase_" << index << "(" << materials_system::PHASES[phi_parameters::phi_property[index]] << ")" << " : "
 					<< setprecision(5) << phi_info.phi[index] * 100 << " %" << endl;
 				WriteLog(log.str());
 				timer::interval_begin(main_iterator::t_interval_begin);
@@ -47,9 +47,9 @@ namespace pf {
 				stringstream log;
 				log << "#------------------------------------------ PCT Field -----------------------------------------------" << endl;
 				log << "# CURRENT STEP = " << main_iterator::Current_ITE_step << ", REAL TIME = " << time_parameters::Real_Time << endl;
-				log << "# MAX PHI INCREMENT  = " << setprecision(5) << model_parameters::PHI_MAX_VARIATION << endl;
-				log << "# MAX CON INCREMENT  = " << setprecision(5) << model_parameters::CON_MAX_VARIATION << endl;
-				log << "# MAX TEMP INCREMENT = " << setprecision(5) << model_parameters::TEMP_MAX_VARIATION << endl;
+				log << "# MAX PHI INCREMENT  = " << setprecision(5) << phi_parameters::PHI_MAX_VARIATION << endl;
+				log << "# MAX CON INCREMENT  = " << setprecision(5) << con_parameters::CON_MAX_VARIATION << endl;
+				log << "# MAX TEMP INCREMENT = " << setprecision(5) << temp_parameters::TEMP_MAX_VARIATION << endl;
 				log << "#----------------------------------------------------------------------------------------------------" << endl;
 				if (main_iterator::Current_ITE_step % screen_output_step != 0)
 					log << endl << endl;

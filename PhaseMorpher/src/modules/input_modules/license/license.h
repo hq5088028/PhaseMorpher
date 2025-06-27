@@ -1,14 +1,15 @@
 #pragma once
 #include "../../../tools/timer.h"
 #include "../../../tools/ioModify.h"
-#include "../../Module.h"
 #include "computer_info.h"
 #include "ProgramPath.h"
+#include <sstream>
 namespace pf {
 	using namespace std;
 	const string license_path = program_path.string() + "PhaseMorpher.license";
 	namespace license {
 		void init_license();
+		void deinit_license();
 		bool check_license(bool _debug = true);
 		bool generate_a_license_for_this_computer();
 		bool generate_a_license_for_other_computer(string cpu_id);
@@ -26,6 +27,5 @@ namespace pf {
 			system("clear");
 #endif
 		}
-		void deinit_license();
 	}
 }

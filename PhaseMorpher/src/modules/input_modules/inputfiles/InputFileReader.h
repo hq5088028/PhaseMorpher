@@ -8,8 +8,6 @@ Modified:    Qi Huang 2023.04;
 Email:       qihuang0908@163.com
 
 */
-
-
 #pragma once
 #include "InputFileMath.h"
 #include "../ioFiles_Params.h"

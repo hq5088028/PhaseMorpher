@@ -1,15 +1,20 @@
 #include "GrandPotentialEquation.h"
 namespace pf {
+	using namespace std;
 	namespace grand_potential_functions {
 
-		vector<double> pre_calculation_grand_potential_functional(double dt) {
+		vector<REAL> pre_calculation_grand_potential_functional(Mesh_Boundry<ConcentrationFieldPoint>& confield, 
+			Mesh_Boundry<GrandPotentialPoint>& grandfield, Mesh_Boundry<PhaseFieldPoint>& phifield, REAL delt_t) {
 			vector<double> MAX_VARIATION; MAX_VARIATION.push_back(0.0); MAX_VARIATION.push_back(0.0); MAX_VARIATION.push_back(0.0);
 #pragma omp parallel for
-			for (int x = 0; x < phaseMesh->limit_x; x++)
-				for (int y = 0; y < phaseMesh->limit_y; y++)
-					for (int z = 0; z < phaseMesh->limit_z; z++) {
-						PhaseNode& node = (*phaseMesh)(x, y, z);
-						node.customValues[ExternalFields::CON_Smooth_Phi] = node.cal_phases_fraction_by_index(phase_indexes);
+			for (int x = confield.X_BEGIN(); x < confield.X_END(); x++)
+				for (int y = confield.Y_BEGIN(); y < confield.Y_END(); y++)
+					for (int z = confield.Z_BEGIN(); z < confield.Z_END(); z++) {
+						ConcentrationFieldPoint& cpoint = confield(x, y, z);
+						GrandPotentialPoint& gpoint = grandfield(x, y, z);
+						PhaseFieldPoint& ppoint = phifield(x, y, z);
+						for(int gindex = 0; gindex < )
+						gpoint.effect_phi[] = node.cal_phases_fraction_by_index(phase_indexes);
 						for (auto comp = node.x.begin(); comp < node.x.end(); comp++)
 							comp->value = 0.0;
 						for (auto phase = node.begin(); phase < node.end(); phase++) {

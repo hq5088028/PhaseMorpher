@@ -8,6 +8,7 @@ Modified:    Qi Huang 2025.03;
 #pragma once
 // #include "../base/sysfiles.h"
 #include <conio.h>
+#include <iostream>
 #include <fstream>
 namespace pf {
 	//printf("\x1b[%d;%dm%s\x1b[%dm", backcolor, frountcolor, str, control);

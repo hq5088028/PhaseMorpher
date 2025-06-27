@@ -95,9 +95,6 @@
     <ClCompile Include="src\modules\model_modules\PhaseField\PhaseFieldModels\PairwiseEquation.cpp">
       <Filter>src\modules\model\phasefield\phi_models</Filter>
     </ClCompile>
-    <ClCompile Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldModels\GrandPotentialEquation.cpp">
-      <Filter>src\modules\model\confield\con_models</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\launcher.h">
@@ -261,6 +258,18 @@
     </ClInclude>
     <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldModels\GrandPotentialEquation.h">
       <Filter>src\modules\model\confield\con_models</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldPoints.h">
+      <Filter>src\modules\model\phasefield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\PhaseField\GrainsOrientations.h">
+      <Filter>src\modules\model\phasefield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldPoints.h">
+      <Filter>src\modules\model\confield</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureFieldPoints.h">
+      <Filter>src\modules\model\tempfield</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

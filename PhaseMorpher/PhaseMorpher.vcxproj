@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="PhaseMorpher.cpp" />
     <ClCompile Include="src\modules\input_modules\license\license.cpp" />
-    <ClCompile Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldModels\GrandPotentialEquation.cpp" />
     <ClCompile Include="src\modules\model_modules\PhaseField\PhaseFieldModels\PairwiseEquation.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\Bmp24Structure.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\GeometryStructure.cpp" />
@@ -55,13 +54,17 @@
     <ClInclude Include="src\modules\MainIterator_Params.h" />
     <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldManager.h" />
     <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldModels\GrandPotentialEquation.h" />
+    <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationFieldPoints.h" />
     <ClInclude Include="src\modules\model_modules\ConcentrationField\ConcentrationField_Params.h" />
     <ClInclude Include="src\modules\model_modules\ModelModulesManager.h" />
     <ClInclude Include="src\modules\model_modules\Model_Params.h" />
+    <ClInclude Include="src\modules\model_modules\PhaseField\GrainsOrientations.h" />
     <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldManager.h" />
     <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldModels\PairwiseEquation.h" />
+    <ClInclude Include="src\modules\model_modules\PhaseField\PhaseFieldPoints.h" />
     <ClInclude Include="src\modules\model_modules\PhaseField\PhaseField_Params.h" />
     <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureFieldManager.h" />
+    <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureFieldPoints.h" />
     <ClInclude Include="src\modules\model_modules\TemperatureField\TemperatureField_Params.h" />
     <ClInclude Include="src\modules\Module.h" />
     <ClInclude Include="src\modules\postprocess_modules\AutoDeltTime.h" />

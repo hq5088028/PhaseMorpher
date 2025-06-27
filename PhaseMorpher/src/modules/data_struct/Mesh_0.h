@@ -46,6 +46,9 @@ namespace pf {
 		T& operator()(int x, int y, int z) {
 			return data[MESH_INDEX(x, y, z, nx, ny)];
 		}
+		T& at(int x, int y, int z) {
+			return data[MESH_INDEX(x, y, z, nx, ny)];
+		}
 
 	protected:
 		int nx;

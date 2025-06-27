@@ -646,22 +646,6 @@ namespace pf {
 					point_set++;
 				}
 			}
-			if (phi_parameters::pair_wise_equation::is_phi_normalized) {
-				// - normalize phi
-				if (phi_parameters::is_phi_field_on) {
-#pragma omp parallel for
-					for (int z = 0; z < phi_parameters::phase_field.Nz(); z++)
-						for (int y = 0; y < phi_parameters::phase_field.Ny(); y++)
-							for (int x = 0; x < phi_parameters::phase_field.Nx(); x++) {
-								PhaseFieldPoint& point = phi_parameters::phase_field(x, y, z);
-								REAL sum_phi = 0.0;
-								for (int index = 0; index < phi_parameters::phi_number; index++)
-									sum_phi += point.phi[index];
-								for (int index = 0; index < phi_parameters::phi_number; index++)
-									point.phi[index] /= sum_phi;
-							}
-				}
-			}
 		}
 
 	}

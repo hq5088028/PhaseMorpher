@@ -2,74 +2,72 @@
 
 namespace pf {
 	namespace pair_wise_functions {
-		using namespace pf::phi_parameters;
-		using namespace pf::phi_parameters::pair_wise_equation;
-		using namespace pf::time_parameters;
+		using namespace pf::pair_wise_parameters;
 		// - 
 		Flag currentFlag(int x, int y, int z, PhaseFieldPoint& point, PairwisePoint& point_ex, int phi_index) {
 			if (point.phi[phi_index] >= Phi_Num_Cut_Off && point.phi[phi_index] <= (1.0 - Phi_Num_Cut_Off))
 				return pf_INTERFACE;
 			if (point.phi[phi_index] < Phi_Num_Cut_Off) {
 				if (diff_method == DifferenceMethod::FIVE_POINT) {
-					if (phase_field(x + 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x - 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off)
+					if (phase_field->at(x + 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x - 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off)
 						return pf_NEAR_INTERFACE;
 				}
 				else {
-					if (phase_field(x + 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x - 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x + 1, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x + 1, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x + 1, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x + 1, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x - 1, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x - 1, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x - 1, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x - 1, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y + 1, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y + 1, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y - 1, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
-						|| phase_field(x, y - 1, z - 1).phi[phi_index] >= Phi_Num_Cut_Off)
+					if (phase_field->at(x + 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x - 1, y, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x + 1, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x + 1, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x + 1, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x + 1, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x - 1, y + 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x - 1, y - 1, z).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x - 1, y, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x - 1, y, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y + 1, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y + 1, z - 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y - 1, z + 1).phi[phi_index] >= Phi_Num_Cut_Off
+						|| phase_field->at(x, y - 1, z - 1).phi[phi_index] >= Phi_Num_Cut_Off)
 						return pf_NEAR_INTERFACE;
 				}
 			}
 			else if (point.phi[phi_index] > Phi_Num_Cut_Off_R) {
 				if (diff_method == DifferenceMethod::FIVE_POINT) {
-					if (phase_field(x + 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x - 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R)
+					if (phase_field->at(x + 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x - 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R)
 						return pf_NEAR_INTERFACE;
 				}
 				else {
-					if (phase_field(x + 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x - 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x + 1, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x + 1, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x + 1, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x + 1, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x - 1, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x - 1, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x - 1, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x - 1, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y + 1, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y + 1, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y - 1, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
-						|| phase_field(x, y - 1, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R)
+					if (phase_field->at(x + 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x - 1, y, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x + 1, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x + 1, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x + 1, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x + 1, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x - 1, y + 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x - 1, y - 1, z).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x - 1, y, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x - 1, y, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y + 1, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y + 1, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y - 1, z + 1).phi[phi_index] <= Phi_Num_Cut_Off_R
+						|| phase_field->at(x, y - 1, z - 1).phi[phi_index] <= Phi_Num_Cut_Off_R)
 						return pf_NEAR_INTERFACE;
 				}
 			}
@@ -590,9 +588,9 @@ namespace pf {
 		};
 		REAL dfint_dphi_crack_D2016_acc(int x, int y, int z, PhaseFieldPoint& point, int phi_index) {
 			REAL gc = phase_field_Gc(x, y, z);
-			Vector3 delt_gc = { (phase_field_Gc(x + 1, y, z) - phase_field_Gc(x - 1, y, z)) / 2 / mesh_parameters::delt_r,
-			(phase_field_Gc(x, y + 1, z) - phase_field_Gc(x, y - 1, z)) / 2 / mesh_parameters::delt_r,
-			(phase_field_Gc(x, y, z + 1) - phase_field_Gc(x, y, z - 1)) / 2 / mesh_parameters::delt_r };
+			Vector3 delt_gc = { (phase_field_Gc(x + 1, y, z) - phase_field_Gc(x - 1, y, z)) / 2 / *delt_r,
+			(phase_field_Gc(x, y + 1, z) - phase_field_Gc(x, y - 1, z)) / 2 / *delt_r,
+			(phase_field_Gc(x, y, z + 1) - phase_field_Gc(x, y, z - 1)) / 2 / *delt_r };
 			return gc / crack_int_width * crack_K - 2 * crack_int_width * (point.grad_phi[phi_index] * delt_gc + gc * point.lap_phi[phi_index]);
 		};
 		void pairwise_normalize_daniel_crack_acc(PhaseFieldPoint& point, PairwisePoint& point_ex) {
@@ -665,7 +663,7 @@ namespace pf {
 			REAL scale = 1.0, increment = 0.0;
 			for (int index = 0; index < phi_number; index++) {
 				if (point_ex.flag[index]) {
-					increment = delt_t * (point_ex.int_increment[index] + point_ex.bulk_increment[index]);
+					increment = *delt_t * (point_ex.int_increment[index] + point_ex.bulk_increment[index]);
 					if (isTwoNumEquality(increment, 0.0))
 						continue;
 					else if ((point.phi[index] + increment) > 1) {
@@ -691,7 +689,7 @@ namespace pf {
 			for (int index = 0; index < phi_acc_number; index++) {
 				int acc_index = point_ex.active_index[index];
 				if (acc_index != PAIRWISE_ACC_STOP) {
-					increment = delt_t * (point_ex.int_increment[acc_index] + point_ex.bulk_increment[acc_index]);
+					increment = *delt_t * (point_ex.int_increment[acc_index] + point_ex.bulk_increment[acc_index]);
 					if (isTwoNumEquality(increment, 0.0))
 						continue;
 					else if ((point.phi[acc_index] + increment) > 1) {
@@ -719,10 +717,10 @@ namespace pf {
 
 		void pre_calculation_phi_pair_wise() {
 #pragma omp parallel for
-			for (int x = phase_field.X_BEGIN(); x <= phase_field.X_END(); x++)
-				for (int y = phase_field.Y_BEGIN(); y <= phase_field.Y_END(); y++)
-					for (int z = phase_field.Z_BEGIN(); z <= phase_field.Z_END(); z++) {
-						PhaseFieldPoint& point = phase_field(x, y, z);
+			for (int x = phase_field->X_BEGIN(); x <= phase_field->X_END(); x++)
+				for (int y = phase_field->Y_BEGIN(); y <= phase_field->Y_END(); y++)
+					for (int z = phase_field->Z_BEGIN(); z <= phase_field->Z_END(); z++) {
+						PhaseFieldPoint& point = phase_field->at(x, y, z);
 						PairwisePoint& point_ex = phase_field_pairwise(x, y, z);
 						int actIndex = 0;
 						for (int index = 0; index < phi_acc_number; index++)
@@ -735,28 +733,28 @@ namespace pf {
 							if (point_ex.flag[index]) {
 								point_ex.bulk_increment[index] = 0.0;
 								point_ex.int_increment[index] = 0.0;
-								point.grad_phi[index][0] = (phase_field(x + 1, y, z).phi[index] - phase_field(x - 1, y, z).phi[index]) / 2 / mesh_parameters::delt_r;
-								point.grad_phi[index][1] = (phase_field(x, y + 1, z).phi[index] - phase_field(x, y - 1, z).phi[index]) / 2 / mesh_parameters::delt_r;
-								point.grad_phi[index][2] = (phase_field(x, y, z + 1).phi[index] - phase_field(x, y, z - 1).phi[index]) / 2 / mesh_parameters::delt_r;
+								point.grad_phi[index][0] = (phase_field->at(x + 1, y, z).phi[index] - phase_field->at(x - 1, y, z).phi[index]) / 2 / *delt_r;
+								point.grad_phi[index][1] = (phase_field->at(x, y + 1, z).phi[index] - phase_field->at(x, y - 1, z).phi[index]) / 2 / *delt_r;
+								point.grad_phi[index][2] = (phase_field->at(x, y, z + 1).phi[index] - phase_field->at(x, y, z - 1).phi[index]) / 2 / *delt_r;
 								if (diff_method == DifferenceMethod::FIVE_POINT) {
 									point.lap_phi[index] =
-										(phase_field(x + 1, y, z).phi[index] + phase_field(x - 1, y, z).phi[index]
-											+ phase_field(x, y + 1, z).phi[index] + phase_field(x, y - 1, z).phi[index]
-											+ phase_field(x, y, z + 1).phi[index] + phase_field(x, y, z - 1).phi[index]
-											- 6 * point.phi[index]) / mesh_parameters::delt_r / mesh_parameters::delt_r;
+										(phase_field->at(x + 1, y, z).phi[index] + phase_field->at(x - 1, y, z).phi[index]
+											+ phase_field->at(x, y + 1, z).phi[index] + phase_field->at(x, y - 1, z).phi[index]
+											+ phase_field->at(x, y, z + 1).phi[index] + phase_field->at(x, y, z - 1).phi[index]
+											- 6 * point.phi[index]) / *delt_r / *delt_r;
 								}
 								else if (diff_method == DifferenceMethod::NINE_POINT) {
 									point.lap_phi[index] =
-										((phase_field(x + 1, y, z).phi[index] + phase_field(x - 1, y, z).phi[index]
-											+ phase_field(x, y + 1, z).phi[index] + phase_field(x, y - 1, z).phi[index]
-											+ phase_field(x, y, z + 1).phi[index] + phase_field(x, y, z - 1).phi[index]) * 4
-											+ phase_field(x - 1, y - 1, z).phi[index] + phase_field(x - 1, y + 1, z).phi[index]
-											+ phase_field(x + 1, y - 1, z).phi[index] + phase_field(x + 1, y + 1, z).phi[index]
-											+ phase_field(x - 1, y, z - 1).phi[index] + phase_field(x - 1, y, z + 1).phi[index]
-											+ phase_field(x + 1, y, z - 1).phi[index] + phase_field(x + 1, y, z + 1).phi[index]
-											+ phase_field(x, y - 1, z - 1).phi[index] + phase_field(x, y - 1, z + 1).phi[index]
-											+ phase_field(x, y + 1, z - 1).phi[index] + phase_field(x, y + 1, z + 1).phi[index]
-											- 36 * point.phi[index]) / 6 / mesh_parameters::delt_r / mesh_parameters::delt_r;
+										((phase_field->at(x + 1, y, z).phi[index] + phase_field->at(x - 1, y, z).phi[index]
+											+ phase_field->at(x, y + 1, z).phi[index] + phase_field->at(x, y - 1, z).phi[index]
+											+ phase_field->at(x, y, z + 1).phi[index] + phase_field->at(x, y, z - 1).phi[index]) * 4
+											+ phase_field->at(x - 1, y - 1, z).phi[index] + phase_field->at(x - 1, y + 1, z).phi[index]
+											+ phase_field->at(x + 1, y - 1, z).phi[index] + phase_field->at(x + 1, y + 1, z).phi[index]
+											+ phase_field->at(x - 1, y, z - 1).phi[index] + phase_field->at(x - 1, y, z + 1).phi[index]
+											+ phase_field->at(x + 1, y, z - 1).phi[index] + phase_field->at(x + 1, y, z + 1).phi[index]
+											+ phase_field->at(x, y - 1, z - 1).phi[index] + phase_field->at(x, y - 1, z + 1).phi[index]
+											+ phase_field->at(x, y + 1, z - 1).phi[index] + phase_field->at(x, y + 1, z + 1).phi[index]
+											- 36 * point.phi[index]) / 6 / *delt_r / *delt_r;
 								}
 							}
 							else {
@@ -770,11 +768,11 @@ namespace pf {
 						if (interface_gradient == Int_Gradient::DanielCrack_G2016 || interface_potential == Int_Potential::DanielCrack_P2016)
 							phase_field_Gc(x, y, z) = Gc_acc(point, point_ex);
 					}
-//#pragma omp parallel for
-			for (int x = phase_field.X_BEGIN(); x <= phase_field.X_END(); x++)
-				for (int y = phase_field.Y_BEGIN(); y <= phase_field.Y_END(); y++)
-					for (int z = phase_field.Z_BEGIN(); z <= phase_field.Z_END(); z++) {
-						PhaseFieldPoint& point = phase_field(x, y, z);
+#pragma omp parallel for
+			for (int x = phase_field->X_BEGIN(); x <= phase_field->X_END(); x++)
+				for (int y = phase_field->Y_BEGIN(); y <= phase_field->Y_END(); y++)
+					for (int z = phase_field->Z_BEGIN(); z <= phase_field->Z_END(); z++) {
+						PhaseFieldPoint& point = phase_field->at(x, y, z);
 						PairwisePoint& point_ex = phase_field_pairwise(x, y, z);
 						// interface energy
 						if (interface_gradient == Int_Gradient::Steinbach_G2009 || interface_potential == Int_Potential::Steinbach_P2009) {
@@ -797,7 +795,7 @@ namespace pf {
 									point_ex.int_increment[beta_index] -= int_incre_b_a;
 #ifdef _DEBUG
 									if (_isnan(int_incre_b_a)) {
-										WriteError("DEBUG: interface energy (pair-wise functions) error !");
+										cout << "DEBUG: interface energy (pair-wise functions) error !" << endl;
 										SYS_PROGRAM_STOP;
 									}
 #endif
@@ -824,7 +822,7 @@ namespace pf {
 									point_ex.int_increment[beta_index] -= int_incre_b_a;
 #ifdef _DEBUG
 									if (_isnan(int_incre_b_a)) {
-										WriteError("DEBUG: interface energy (pair-wise functions) error !");
+										cout << "DEBUG: interface energy (pair-wise functions) error !" << endl;
 										SYS_PROGRAM_STOP;
 									}
 #endif
@@ -864,14 +862,12 @@ namespace pf {
 		}
 
 		REAL solve_phi_pair_wise() {
-			using namespace phi_parameters;
-			using namespace phi_parameters::pair_wise_equation;
 			REAL MAX_PHI_INCREMENT = 0.0;
 #pragma omp parallel for
-			for (int x = phase_field.X_BEGIN(); x <= phase_field.X_END(); x++)
-				for (int y = phase_field.Y_BEGIN(); y <= phase_field.Y_END(); y++)
-					for (int z = phase_field.Z_BEGIN(); z <= phase_field.Z_END(); z++) {
-						PhaseFieldPoint& point = phase_field(x, y, z);
+			for (int x = phase_field->X_BEGIN(); x <= phase_field->X_END(); x++)
+				for (int y = phase_field->Y_BEGIN(); y <= phase_field->Y_END(); y++)
+					for (int z = phase_field->Z_BEGIN(); z <= phase_field->Z_END(); z++) {
+						PhaseFieldPoint& point = phase_field->at(x, y, z);
 						PairwisePoint& point_ex = phase_field_pairwise(x, y, z);
 						bool phi_change = false;
 						for (int index = 0; index < phi_acc_number; index++) {
@@ -879,7 +875,7 @@ namespace pf {
 							if (phi_index != PAIRWISE_ACC_STOP && point_ex.flag[phi_index]) {
 								phi_change = true;
 								point.old_phi[phi_index] = point.phi[phi_index];
-								point.phi[phi_index] += time_parameters::delt_t * (point_ex.int_increment[phi_index] + point_ex.bulk_increment[phi_index]);
+								point.phi[phi_index] += *delt_t * (point_ex.int_increment[phi_index] + point_ex.bulk_increment[phi_index]);
 #ifdef _OPENMP
 #pragma omp critical
 #endif
@@ -891,7 +887,7 @@ namespace pf {
 								if (_isnan(point.phi[phi_index])) {
 									string error_report = "ERROR : Phase fraction is NaN in x = " + to_string(x) + " , y = " + to_string(y) 
 										+ " , z = " + to_string(z) + " position, the phase index is " + to_string(phi_index) + "\n";
-									WriteError(error_report);
+									cout << error_report << endl;
 									SYS_PROGRAM_STOP;
 								}
 #endif
@@ -948,35 +944,35 @@ namespace pf {
 								}
 								else if (point.phi[index] < Phi_Num_Cut_Off) {
 									if (diff_method == DifferenceMethod::FIVE_POINT) {
-										if (phase_field(x + 1, y, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x - 1, y, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y + 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y - 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y, z + 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y, z - 1).phi[index] >= Phi_Num_Cut_Off)
+										if (phase_field->at(x + 1, y, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x - 1, y, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y + 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y - 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y, z + 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y, z - 1).phi[index] >= Phi_Num_Cut_Off)
 											point_ex.flag[index] = pf_NEAR_INTERFACE;
 										else
 											point_ex.flag[index] = pf_BULK;
 									}
 									else {
-										if (phase_field(x + 1, y, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x - 1, y, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y + 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y - 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y, z + 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y, z - 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x + 1, y + 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x + 1, y - 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x + 1, y, z + 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x + 1, y, z - 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x - 1, y + 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x - 1, y - 1, z).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x - 1, y, z + 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x - 1, y, z - 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y + 1, z + 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y + 1, z - 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y - 1, z + 1).phi[index] >= Phi_Num_Cut_Off
-											|| phase_field(x, y - 1, z - 1).phi[index] >= Phi_Num_Cut_Off)
+										if (phase_field->at(x + 1, y, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x - 1, y, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y + 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y - 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y, z + 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y, z - 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x + 1, y + 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x + 1, y - 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x + 1, y, z + 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x + 1, y, z - 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x - 1, y + 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x - 1, y - 1, z).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x - 1, y, z + 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x - 1, y, z - 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y + 1, z + 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y + 1, z - 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y - 1, z + 1).phi[index] >= Phi_Num_Cut_Off
+											|| phase_field->at(x, y - 1, z - 1).phi[index] >= Phi_Num_Cut_Off)
 											point_ex.flag[index] = pf_NEAR_INTERFACE;
 										else
 											point_ex.flag[index] = pf_BULK;
@@ -984,35 +980,35 @@ namespace pf {
 								}
 								else if (point.phi[index] > Phi_Num_Cut_Off_R) {
 									if (diff_method == DifferenceMethod::FIVE_POINT) {
-										if (phase_field(x + 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x - 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R)
+										if (phase_field->at(x + 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x - 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R)
 											point_ex.flag[index] = pf_NEAR_INTERFACE;
 										else
 											point_ex.flag[index] = pf_BULK;
 									}
 									else {
-										if (phase_field(x + 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x - 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x + 1, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x + 1, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x + 1, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x + 1, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x - 1, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x - 1, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x - 1, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x - 1, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y + 1, z + 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y + 1, z - 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y - 1, z + 1).phi[index] <= Phi_Num_Cut_Off_R
-											|| phase_field(x, y - 1, z - 1).phi[index] <= Phi_Num_Cut_Off_R)
+										if (phase_field->at(x + 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x - 1, y, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x + 1, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x + 1, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x + 1, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x + 1, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x - 1, y + 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x - 1, y - 1, z).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x - 1, y, z + 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x - 1, y, z - 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y + 1, z + 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y + 1, z - 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y - 1, z + 1).phi[index] <= Phi_Num_Cut_Off_R
+											|| phase_field->at(x, y - 1, z - 1).phi[index] <= Phi_Num_Cut_Off_R)
 											point_ex.flag[index] = pf_NEAR_INTERFACE;
 										else
 											point_ex.flag[index] = pf_BULK;
@@ -1025,295 +1021,295 @@ namespace pf {
 		}
 
 		void boundary_condition_crack() {
-			if (mesh_parameters::x_down == BoundaryCondition::PERIODIC) {
+			if (x_down == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(0, y, z)          = phase_field(mesh_parameters::MESH_NX, y, z);
-						phase_field_pairwise(0, y, z) = phase_field_pairwise(mesh_parameters::MESH_NX, y, z);
-						phase_field_Gc(0, y, z)       = phase_field_Gc(mesh_parameters::MESH_NX, y, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(0, y, z)          = phase_field->at(MESH_NX, y, z);
+						phase_field_pairwise(0, y, z) = phase_field_pairwise(MESH_NX, y, z);
+						phase_field_Gc(0, y, z)       = phase_field_Gc(MESH_NX, y, z);
 					}
 			}
-			else if (mesh_parameters::x_down == BoundaryCondition::ADIABATIC) {
+			else if (x_down == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(0, y, z) = phase_field(1, y, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(0, y, z) = phase_field->at(1, y, z);
 						phase_field_pairwise(0, y, z) = phase_field_pairwise(1, y, z);
 						phase_field_Gc(0, y, z) = phase_field_Gc(1, y, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
 						BoundaryCondition_PhiFix(0, y, z);
 					}
 			}
-			if (mesh_parameters::y_down == BoundaryCondition::PERIODIC) {
+			if (y_down == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, 0, z) = phase_field(x, mesh_parameters::MESH_NY, z);
-						phase_field_pairwise(x, 0, z) = phase_field_pairwise(x, mesh_parameters::MESH_NY, z);
-						phase_field_Gc(x, 0, z) = phase_field_Gc(x, mesh_parameters::MESH_NY, z);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, 0, z) = phase_field->at(x, MESH_NY, z);
+						phase_field_pairwise(x, 0, z) = phase_field_pairwise(x, MESH_NY, z);
+						phase_field_Gc(x, 0, z) = phase_field_Gc(x, MESH_NY, z);
 					}
 			}
-			else if (mesh_parameters::y_down == BoundaryCondition::ADIABATIC) {
+			else if (y_down == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, 0, z) = phase_field(x, 1, z);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, 0, z) = phase_field->at(x, 1, z);
 						phase_field_pairwise(x, 0, z) = phase_field_pairwise(x, 1, z);
 						phase_field_Gc(x, 0, z) = phase_field_Gc(x, 1, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nz(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
+				for (int x = 0; x < phase_field->Nz(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
 						BoundaryCondition_PhiFix(x, 0, z);
 					}
 			}
-			if (mesh_parameters::z_down == BoundaryCondition::PERIODIC) {
+			if (z_down == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, 0) = phase_field(x, y, mesh_parameters::MESH_NZ);
-						phase_field_pairwise(x, y, 0) = phase_field_pairwise(x, y, mesh_parameters::MESH_NZ);
-						phase_field_Gc(x, y, 0) = phase_field_Gc(x, y, mesh_parameters::MESH_NZ);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, 0) = phase_field->at(x, y, MESH_NZ);
+						phase_field_pairwise(x, y, 0) = phase_field_pairwise(x, y, MESH_NZ);
+						phase_field_Gc(x, y, 0) = phase_field_Gc(x, y, MESH_NZ);
 					}
 			}
-			else if (mesh_parameters::z_down == BoundaryCondition::ADIABATIC) {
+			else if (z_down == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, 0) = phase_field(x, y, 1);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, 0) = phase_field->at(x, y, 1);
 						phase_field_pairwise(x, y, 0) = phase_field_pairwise(x, y, 1);
 						phase_field_Gc(x, y, 0) = phase_field_Gc(x, y, 1);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
 						BoundaryCondition_PhiFix(x, y, 0);
 					}
 			}
-			if (mesh_parameters::x_up == BoundaryCondition::PERIODIC) {
+			if (x_up == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(mesh_parameters::MESH_NX + 1, y, z) = phase_field(1, y, z);
-						phase_field_pairwise(mesh_parameters::MESH_NX + 1, y, z) = phase_field_pairwise(1, y, z);
-						phase_field_Gc(mesh_parameters::MESH_NX + 1, y, z) = phase_field_Gc(1, y, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(MESH_NX + 1, y, z) = phase_field->at(1, y, z);
+						phase_field_pairwise(MESH_NX + 1, y, z) = phase_field_pairwise(1, y, z);
+						phase_field_Gc(MESH_NX + 1, y, z) = phase_field_Gc(1, y, z);
 					}
 			}
-			else if (mesh_parameters::x_up == BoundaryCondition::ADIABATIC) {
+			else if (x_up == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(mesh_parameters::MESH_NX + 1, y, z) = phase_field(mesh_parameters::MESH_NX, y, z);
-						phase_field_pairwise(mesh_parameters::MESH_NX + 1, y, z) = phase_field_pairwise(mesh_parameters::MESH_NX, y, z);
-						phase_field_Gc(mesh_parameters::MESH_NX + 1, y, z) = phase_field_Gc(mesh_parameters::MESH_NX, y, z);
-					}
-			}
-			else {
-#pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						BoundaryCondition_PhiFix(mesh_parameters::MESH_NX + 1, y, z);
-					}
-			}
-			if (mesh_parameters::y_up == BoundaryCondition::PERIODIC) {
-#pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, mesh_parameters::MESH_NY + 1, z) = phase_field(x, 1, z);
-						phase_field_pairwise(x, mesh_parameters::MESH_NY + 1, z) = phase_field_pairwise(x, 1, z);
-						phase_field_Gc(x, mesh_parameters::MESH_NY + 1, z) = phase_field_Gc(x, 1, z);
-					}
-			}
-			else if (mesh_parameters::y_up == BoundaryCondition::ADIABATIC) {
-#pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, mesh_parameters::MESH_NY + 1, z) = phase_field(x, mesh_parameters::MESH_NY, z);
-						phase_field_pairwise(x, mesh_parameters::MESH_NY + 1, z) = phase_field_pairwise(x, mesh_parameters::MESH_NY, z);
-						phase_field_Gc(x, mesh_parameters::MESH_NY + 1, z) = phase_field_Gc(x, mesh_parameters::MESH_NY, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(MESH_NX + 1, y, z) = phase_field->at(MESH_NX, y, z);
+						phase_field_pairwise(MESH_NX + 1, y, z) = phase_field_pairwise(MESH_NX, y, z);
+						phase_field_Gc(MESH_NX + 1, y, z) = phase_field_Gc(MESH_NX, y, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						BoundaryCondition_PhiFix(x, mesh_parameters::MESH_NY + 1, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						BoundaryCondition_PhiFix(MESH_NX + 1, y, z);
 					}
 			}
-			if (mesh_parameters::z_up == BoundaryCondition::PERIODIC) {
+			if (y_up == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, mesh_parameters::MESH_NZ + 1) = phase_field(x, y, 1);
-						phase_field_pairwise(x, y, mesh_parameters::MESH_NZ + 1) = phase_field_pairwise(x, y, 1);
-						phase_field_Gc(x, y, mesh_parameters::MESH_NZ + 1) = phase_field_Gc(x, y, 1);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, MESH_NY + 1, z) = phase_field->at(x, 1, z);
+						phase_field_pairwise(x, MESH_NY + 1, z) = phase_field_pairwise(x, 1, z);
+						phase_field_Gc(x, MESH_NY + 1, z) = phase_field_Gc(x, 1, z);
 					}
 			}
-			else if (mesh_parameters::z_up == BoundaryCondition::ADIABATIC) {
+			else if (y_up == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, mesh_parameters::MESH_NZ + 1) = phase_field(x, y, mesh_parameters::MESH_NZ);
-						phase_field_pairwise(x, y, mesh_parameters::MESH_NZ + 1) = phase_field_pairwise(x, y, mesh_parameters::MESH_NZ);
-						phase_field_Gc(x, y, mesh_parameters::MESH_NZ + 1) = phase_field_Gc(x, y, mesh_parameters::MESH_NZ);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, MESH_NY + 1, z) = phase_field->at(x, MESH_NY, z);
+						phase_field_pairwise(x, MESH_NY + 1, z) = phase_field_pairwise(x, MESH_NY, z);
+						phase_field_Gc(x, MESH_NY + 1, z) = phase_field_Gc(x, MESH_NY, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						BoundaryCondition_PhiFix(x, y, mesh_parameters::MESH_NZ + 1);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						BoundaryCondition_PhiFix(x, MESH_NY + 1, z);
+					}
+			}
+			if (z_up == BoundaryCondition::PERIODIC) {
+#pragma omp parallel for
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, MESH_NZ + 1) = phase_field->at(x, y, 1);
+						phase_field_pairwise(x, y, MESH_NZ + 1) = phase_field_pairwise(x, y, 1);
+						phase_field_Gc(x, y, MESH_NZ + 1) = phase_field_Gc(x, y, 1);
+					}
+			}
+			else if (z_up == BoundaryCondition::ADIABATIC) {
+#pragma omp parallel for
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, MESH_NZ + 1) = phase_field->at(x, y, MESH_NZ);
+						phase_field_pairwise(x, y, MESH_NZ + 1) = phase_field_pairwise(x, y, MESH_NZ);
+						phase_field_Gc(x, y, MESH_NZ + 1) = phase_field_Gc(x, y, MESH_NZ);
+					}
+			}
+			else {
+#pragma omp parallel for
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						BoundaryCondition_PhiFix(x, y, MESH_NZ + 1);
 					}
 			}
 		}
 
 		void boundary_condition() {
-			if (mesh_parameters::x_down == BoundaryCondition::PERIODIC) {
+			if (x_down == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(0, y, z) = phase_field(mesh_parameters::MESH_NX, y, z);
-						phase_field_pairwise(0, y, z) = phase_field_pairwise(mesh_parameters::MESH_NX, y, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(0, y, z) = phase_field->at(MESH_NX, y, z);
+						phase_field_pairwise(0, y, z) = phase_field_pairwise(MESH_NX, y, z);
 					}
 			}
-			else if (mesh_parameters::x_down == BoundaryCondition::ADIABATIC) {
+			else if (x_down == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(0, y, z) = phase_field(1, y, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(0, y, z) = phase_field->at(1, y, z);
 						phase_field_pairwise(0, y, z) = phase_field_pairwise(1, y, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
 						BoundaryCondition_PhiFix(0, y, z);
 					}
 			}
-			if (mesh_parameters::y_down == BoundaryCondition::PERIODIC) {
+			if (y_down == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, 0, z) = phase_field(x, mesh_parameters::MESH_NY, z);
-						phase_field_pairwise(x, 0, z) = phase_field_pairwise(x, mesh_parameters::MESH_NY, z);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, 0, z) = phase_field->at(x, MESH_NY, z);
+						phase_field_pairwise(x, 0, z) = phase_field_pairwise(x, MESH_NY, z);
 					}
 			}
-			else if (mesh_parameters::y_down == BoundaryCondition::ADIABATIC) {
+			else if (y_down == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, 0, z) = phase_field(x, 1, z);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, 0, z) = phase_field->at(x, 1, z);
 						phase_field_pairwise(x, 0, z) = phase_field_pairwise(x, 1, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nz(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
+				for (int x = 0; x < phase_field->Nz(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
 						BoundaryCondition_PhiFix(x, 0, z);
 					}
 			}
-			if (mesh_parameters::z_down == BoundaryCondition::PERIODIC) {
+			if (z_down == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, 0) = phase_field(x, y, mesh_parameters::MESH_NZ);
-						phase_field_pairwise(x, y, 0) = phase_field_pairwise(x, y, mesh_parameters::MESH_NZ);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, 0) = phase_field->at(x, y, MESH_NZ);
+						phase_field_pairwise(x, y, 0) = phase_field_pairwise(x, y, MESH_NZ);
 					}
 			}
-			else if (mesh_parameters::z_down == BoundaryCondition::ADIABATIC) {
+			else if (z_down == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, 0) = phase_field(x, y, 1);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, 0) = phase_field->at(x, y, 1);
 						phase_field_pairwise(x, y, 0) = phase_field_pairwise(x, y, 1);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
 						BoundaryCondition_PhiFix(x, y, 0);
 					}
 			}
-			if (mesh_parameters::x_up == BoundaryCondition::PERIODIC) {
+			if (x_up == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(mesh_parameters::MESH_NX + 1, y, z) = phase_field(1, y, z);
-						phase_field_pairwise(mesh_parameters::MESH_NX + 1, y, z) = phase_field_pairwise(1, y, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(MESH_NX + 1, y, z) = phase_field->at(1, y, z);
+						phase_field_pairwise(MESH_NX + 1, y, z) = phase_field_pairwise(1, y, z);
 					}
 			}
-			else if (mesh_parameters::x_up == BoundaryCondition::ADIABATIC) {
+			else if (x_up == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(mesh_parameters::MESH_NX + 1, y, z) = phase_field(mesh_parameters::MESH_NX, y, z);
-						phase_field_pairwise(mesh_parameters::MESH_NX + 1, y, z) = phase_field_pairwise(mesh_parameters::MESH_NX, y, z);
-					}
-			}
-			else {
-#pragma omp parallel for
-				for (int y = 0; y < phase_field.Ny(); y++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						BoundaryCondition_PhiFix(mesh_parameters::MESH_NX + 1, y, z);
-					}
-			}
-			if (mesh_parameters::y_up == BoundaryCondition::PERIODIC) {
-#pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, mesh_parameters::MESH_NY + 1, z) = phase_field(x, 1, z);
-						phase_field_pairwise(x, mesh_parameters::MESH_NY + 1, z) = phase_field_pairwise(x, 1, z);
-					}
-			}
-			else if (mesh_parameters::y_up == BoundaryCondition::ADIABATIC) {
-#pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						phase_field(x, mesh_parameters::MESH_NY + 1, z) = phase_field(x, mesh_parameters::MESH_NY, z);
-						phase_field_pairwise(x, mesh_parameters::MESH_NY + 1, z) = phase_field_pairwise(x, mesh_parameters::MESH_NY, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(MESH_NX + 1, y, z) = phase_field->at(MESH_NX, y, z);
+						phase_field_pairwise(MESH_NX + 1, y, z) = phase_field_pairwise(MESH_NX, y, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int z = 0; z < phase_field.Nz(); z++) {
-						BoundaryCondition_PhiFix(x, mesh_parameters::MESH_NY + 1, z);
+				for (int y = 0; y < phase_field->Ny(); y++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						BoundaryCondition_PhiFix(MESH_NX + 1, y, z);
 					}
 			}
-			if (mesh_parameters::z_up == BoundaryCondition::PERIODIC) {
+			if (y_up == BoundaryCondition::PERIODIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, mesh_parameters::MESH_NZ + 1) = phase_field(x, y, 1);
-						phase_field_pairwise(x, y, mesh_parameters::MESH_NZ + 1) = phase_field_pairwise(x, y, 1);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, MESH_NY + 1, z) = phase_field->at(x, 1, z);
+						phase_field_pairwise(x, MESH_NY + 1, z) = phase_field_pairwise(x, 1, z);
 					}
 			}
-			else if (mesh_parameters::z_up == BoundaryCondition::ADIABATIC) {
+			else if (y_up == BoundaryCondition::ADIABATIC) {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						phase_field(x, y, mesh_parameters::MESH_NZ + 1) = phase_field(x, y, mesh_parameters::MESH_NZ);
-						phase_field_pairwise(x, y, mesh_parameters::MESH_NZ + 1) = phase_field_pairwise(x, y, mesh_parameters::MESH_NZ);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						phase_field->at(x, MESH_NY + 1, z) = phase_field->at(x, MESH_NY, z);
+						phase_field_pairwise(x, MESH_NY + 1, z) = phase_field_pairwise(x, MESH_NY, z);
 					}
 			}
 			else {
 #pragma omp parallel for
-				for (int x = 0; x < phase_field.Nx(); x++)
-					for (int y = 0; y < phase_field.Ny(); y++) {
-						BoundaryCondition_PhiFix(x, y, mesh_parameters::MESH_NZ + 1);
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int z = 0; z < phase_field->Nz(); z++) {
+						BoundaryCondition_PhiFix(x, MESH_NY + 1, z);
+					}
+			}
+			if (z_up == BoundaryCondition::PERIODIC) {
+#pragma omp parallel for
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, MESH_NZ + 1) = phase_field->at(x, y, 1);
+						phase_field_pairwise(x, y, MESH_NZ + 1) = phase_field_pairwise(x, y, 1);
+					}
+			}
+			else if (z_up == BoundaryCondition::ADIABATIC) {
+#pragma omp parallel for
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						phase_field->at(x, y, MESH_NZ + 1) = phase_field->at(x, y, MESH_NZ);
+						phase_field_pairwise(x, y, MESH_NZ + 1) = phase_field_pairwise(x, y, MESH_NZ);
+					}
+			}
+			else {
+#pragma omp parallel for
+				for (int x = 0; x < phase_field->Nx(); x++)
+					for (int y = 0; y < phase_field->Ny(); y++) {
+						BoundaryCondition_PhiFix(x, y, MESH_NZ + 1);
 					}
 			}
 		}

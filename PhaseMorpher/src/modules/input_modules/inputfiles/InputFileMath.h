@@ -11,6 +11,9 @@ Email:       qihuang0908@163.com
 #pragma once
 #include "../../../base/MACRO_DEF.h"
 #include <random>
+#include <iostream>
+#include <string>
+#include <sstream>
 namespace pf {
 	using namespace std;
 	enum CalculationOperator { CO_bottom, CO_PLus, CO_Minux, CO_Multiply, CO_Divide, CO_ParaSeparator, CO_top };

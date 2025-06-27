@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="PhaseMorpher.cpp" />
     <ClCompile Include="src\modules\input_modules\license\license.cpp" />
-    <ClCompile Include="src\modules\model_modules\PhaseField\PhaseFieldModels\PairwiseEquation.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\Bmp24Structure.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\GeometryStructure.cpp" />
     <ClCompile Include="src\modules\preprocess_modules\MicrostructureInit\PorousStructure.cpp" />
